@@ -401,6 +401,11 @@ public class PdvView extends javax.swing.JFrame {
 
     private void jbNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovaVendaActionPerformed
         // TODO add your handling code here:
+        int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente limpar os campos?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        
+        if(resposta == JOptionPane.YES_OPTION){
+           limpaCampos();
+        }
     }//GEN-LAST:event_jbNovaVendaActionPerformed
 
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
@@ -477,4 +482,17 @@ public class PdvView extends javax.swing.JFrame {
     public javax.swing.JTextField jtfValorTotalPago;
     public javax.swing.JTextField jtfValorTotalTroco;
     // End of variables declaration//GEN-END:variables
+
+    protected void limpaCampos(){
+        jtbProdutos.clearSelection();
+        jtfCpfCnpj.setText("");
+        jtfNomeCliente.setText("");
+        jtfValorTotalDesconto.setText("");
+        jtfValorTotalItens.setText("");
+        jtfValorTotalPagar.setText("");
+        jtfValorTotalPago.setText("");
+        jtfValorTotalTroco.setText("");
+    }
+
+
 }
