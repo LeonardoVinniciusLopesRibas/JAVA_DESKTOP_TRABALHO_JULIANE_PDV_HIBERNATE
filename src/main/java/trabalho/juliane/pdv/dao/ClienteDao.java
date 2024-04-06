@@ -35,10 +35,11 @@ public class ClienteDao implements ClienteInterfaces {
     public ArrayList<Cliente> selectAllCliente() {
         ArrayList<Cliente> clientes = null;
         try {
-            TypedQuery<Cliente> query = em.createQuery("SELECT c FROM cliente c", Cliente.class);
+            TypedQuery<Cliente> query = em.createQuery("SELECT c FROM Cliente c", Cliente.class);
             clientes = (ArrayList<Cliente>) query.getResultList();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar clientes: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return clientes;
     }

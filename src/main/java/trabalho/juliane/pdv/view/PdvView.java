@@ -1,7 +1,9 @@
 package trabalho.juliane.pdv.view;
 
+import javax.persistence.Entity;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import trabalho.juliane.pdv.util.EntityManagerUtil;
 import trabalho.juliane.pdv.util.SetIcon;
 
 public class PdvView extends javax.swing.JFrame {
@@ -397,14 +399,21 @@ public class PdvView extends javax.swing.JFrame {
 
     private void jbAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddClienteActionPerformed
         // TODO add your handling code here:
+        CarregaClientesView ccv = new CarregaClientesView();
+        if (ccv == null || !ccv.isVisible()) {
+            ccv = new CarregaClientesView();
+            ccv.setVisible(true);
+        } else {
+            ccv.toFront();
+        }
     }//GEN-LAST:event_jbAddClienteActionPerformed
 
     private void jbNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovaVendaActionPerformed
         // TODO add your handling code here:
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente limpar os campos?", "Confirmação", JOptionPane.YES_NO_OPTION);
-        
-        if(resposta == JOptionPane.YES_OPTION){
-           limpaCampos();
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            limpaCampos();
         }
     }//GEN-LAST:event_jbNovaVendaActionPerformed
 
@@ -443,6 +452,7 @@ public class PdvView extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                EntityManagerUtil.getEntityManagerFactory();
                 new PdvView().setVisible(true);
             }
         });
@@ -483,7 +493,7 @@ public class PdvView extends javax.swing.JFrame {
     public javax.swing.JTextField jtfValorTotalTroco;
     // End of variables declaration//GEN-END:variables
 
-    protected void limpaCampos(){
+    protected void limpaCampos() {
         jtbProdutos.clearSelection();
         jtfCpfCnpj.setText("");
         jtfNomeCliente.setText("");
@@ -493,6 +503,5 @@ public class PdvView extends javax.swing.JFrame {
         jtfValorTotalPago.setText("");
         jtfValorTotalTroco.setText("");
     }
-
 
 }
