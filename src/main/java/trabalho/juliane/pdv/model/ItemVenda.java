@@ -24,5 +24,61 @@ public class ItemVenda {
     
     @Column(name = "quantidade")
     private double quantidade;
+    
+    @Column(name = "ativo")
+    private boolean ativo;
+
+    public ItemVenda() {
+    }
+
+    public ItemVenda(int id, Produto produto, Venda venda, double quantidade, boolean ativo) {
+        this.id = id;
+        this.produto = produto;
+        this.venda = venda;
+        this.quantidade = quantidade;
+        this.ativo = ativo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
+    public double getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(double quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
+    
 
 }

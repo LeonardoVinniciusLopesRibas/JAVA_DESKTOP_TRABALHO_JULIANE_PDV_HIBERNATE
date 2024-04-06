@@ -27,16 +27,20 @@ public class Venda {
     
     @Column(name = "qtdItens")
     private int qtdItens;
+    
+    @Column(name = "ativo")
+    private boolean ativo;
 
-    public Venda(int id, double valorTotal, Cliente cliente, double valorTotalDesconto, int qtdItens) {
+    public Venda() {
+    }
+
+    public Venda(int id, double valorTotal, Cliente cliente, double valorTotalDesconto, int qtdItens, boolean ativo) {
         this.id = id;
         this.valorTotal = valorTotal;
         this.cliente = cliente;
         this.valorTotalDesconto = valorTotalDesconto;
         this.qtdItens = qtdItens;
-    }
-
-    public Venda() {
+        this.ativo = ativo;
     }
 
     public int getId() {
@@ -78,8 +82,15 @@ public class Venda {
     public void setQtdItens(int qtdItens) {
         this.qtdItens = qtdItens;
     }
-    
-      
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     
     
 }

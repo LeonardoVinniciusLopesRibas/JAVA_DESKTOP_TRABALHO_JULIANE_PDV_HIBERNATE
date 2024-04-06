@@ -21,13 +21,17 @@ public class Cliente {
     @Column(name = "cpfcnpj", length = 14)
     private String cpfcnpj;
     
-    public Cliente(int id, String nome, String cpfcnpj) {
+    @Column(name = "ativo")
+    private boolean ativo;
+
+    public Cliente() {
+    }
+
+    public Cliente(int id, String nome, String cpfcnpj, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.cpfcnpj = cpfcnpj;
-    }
-
-    public Cliente() {
+        this.ativo = ativo;
     }
 
     public int getId() {
@@ -53,6 +57,15 @@ public class Cliente {
     public void setCpfcnpj(String cpfcnpj) {
         this.cpfcnpj = cpfcnpj;
     }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+    
     
     
     

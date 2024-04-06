@@ -23,15 +23,19 @@ public class Produto {
     
     @Column(name = "valorVenda")
     private double valorVenda;
+    
+    @Column(name = "ativo")
+    private boolean ativo;
 
     public Produto() {
     }
 
-    public Produto(int id, String codigoRapido, String descricao, double valorVenda) {
+    public Produto(int id, String codigoRapido, String descricao, double valorVenda, boolean ativo) {
         this.id = id;
         this.codigoRapido = codigoRapido;
         this.descricao = descricao;
         this.valorVenda = valorVenda;
+        this.ativo = ativo;
     }
 
     public int getId() {
@@ -66,7 +70,14 @@ public class Produto {
         this.valorVenda = valorVenda;
     }
 
-    
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
     
     
     
