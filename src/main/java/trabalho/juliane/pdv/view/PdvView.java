@@ -1,12 +1,13 @@
 package trabalho.juliane.pdv.view;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import trabalho.juliane.pdv.util.SetIcon;
 
 public class PdvView extends javax.swing.JFrame {
 
-    
     SetIcon si = new SetIcon();
+
     public PdvView() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -18,12 +19,15 @@ public class PdvView extends javax.swing.JFrame {
         si.setAdicionarCliente(jbAddCliente);
         si.setNovaVenda(jbNovaVenda);
         si.setSair(jbSair);
-        
-        
-        
+        jtfCodigoRapido.setEditable(false);
+        jtfValorTotalDesconto.setEditable(false);
+        jtfValorTotalItens.setEditable(false);
+        jtfValorTotalPagar.setEditable(false);
+        jtfValorTotalPago.setEditable(false);
+        jtfValorTotalTroco.setEditable(false);
+
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,27 +68,67 @@ public class PdvView extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 51, 255));
 
         jbFormaPagamento.setText("Forma de Pagamento");
+        jbFormaPagamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFormaPagamentoActionPerformed(evt);
+            }
+        });
 
         jbFinalizar.setText("Finalizar");
+        jbFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFinalizarActionPerformed(evt);
+            }
+        });
 
         jbAddProduto.setText("Adicionar Produto");
+        jbAddProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAddProdutoActionPerformed(evt);
+            }
+        });
 
         jbRemoverProduto.setText("Remover Produto");
+        jbRemoverProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRemoverProdutoActionPerformed(evt);
+            }
+        });
 
         jbNovaVenda.setText("Nova Venda");
+        jbNovaVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNovaVendaActionPerformed(evt);
+            }
+        });
 
         jbAddCliente.setText("Adicionar Cliente");
+        jbAddCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAddClienteActionPerformed(evt);
+            }
+        });
 
         jbSair.setText("Sair");
+        jbSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSairActionPerformed(evt);
+            }
+        });
 
         jbDescontoTotal.setText("Desconto Total");
+        jbDescontoTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDescontoTotalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(92, 92, 92)
                 .addComponent(jbFinalizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbFormaPagamento)
@@ -100,12 +144,12 @@ public class PdvView extends javax.swing.JFrame {
                 .addComponent(jbNovaVenda)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbSair)
-                .addContainerGap(386, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,7 +159,7 @@ public class PdvView extends javax.swing.JFrame {
                     .addComponent(jbNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbDescontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jtfValorTotalItens.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -280,7 +324,7 @@ public class PdvView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -331,9 +375,45 @@ public class PdvView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void jbFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbFinalizarActionPerformed
+
+    private void jbFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFormaPagamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbFormaPagamentoActionPerformed
+
+    private void jbRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbRemoverProdutoActionPerformed
+
+    private void jbDescontoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDescontoTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbDescontoTotalActionPerformed
+
+    private void jbAddProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbAddProdutoActionPerformed
+
+    private void jbAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbAddClienteActionPerformed
+
+    private void jbNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovaVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbNovaVendaActionPerformed
+
+    private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
+        // TODO add your handling code here:
+        int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente sair do sistema?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            dispose();
+        }
+    }//GEN-LAST:event_jbSairActionPerformed
+
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -356,15 +436,13 @@ public class PdvView extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PdvView().setVisible(true);
             }
         });
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btRemover;

@@ -15,7 +15,10 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(name = "descricao")
+    @Column(name = "codigoRapido", length = 30)
+    private String codigoRapido;
+    
+    @Column(name = "descricao", length = 100)
     private String descricao;
     
     @Column(name = "valorVenda")
@@ -24,8 +27,9 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int id, String descricao, double valorVenda) {
+    public Produto(int id, String codigoRapido, String descricao, double valorVenda) {
         this.id = id;
+        this.codigoRapido = codigoRapido;
         this.descricao = descricao;
         this.valorVenda = valorVenda;
     }
@@ -36,6 +40,14 @@ public class Produto {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCodigoRapido() {
+        return codigoRapido;
+    }
+
+    public void setCodigoRapido(String codigoRapido) {
+        this.codigoRapido = codigoRapido;
     }
 
     public String getDescricao() {
@@ -53,6 +65,8 @@ public class Produto {
     public void setValorVenda(double valorVenda) {
         this.valorVenda = valorVenda;
     }
+
+    
     
     
     
