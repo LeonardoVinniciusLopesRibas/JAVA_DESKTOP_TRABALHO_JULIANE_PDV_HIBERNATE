@@ -2,6 +2,7 @@ C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJ
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\model\Venda.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\util\EntityManagerUtil.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\dao\VendaDao.java
+C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\util\Tabela.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\dao\ClienteDao.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\controller\ProdutoController.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\interfaces\ClienteInterfaces.java
@@ -13,6 +14,7 @@ C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJ
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\view\PdvView.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\interfaces\ItemVendaInterfaces.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\model\ItemVenda.java
+C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\util\PosicaoFormulario.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\controller\VendaController.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\controller\ClienteController.java
 C:\Users\leona\OneDrive\Documentos\NetBeansProjects\TrabalhoJulianePdv\TrabalhoJulianePdv\src\main\java\trabalho\juliane\pdv\model\Produto.java
