@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import trabalho.juliane.pdv.dao.ClienteDao;
 import trabalho.juliane.pdv.model.Cliente;
@@ -16,14 +18,18 @@ public class CarregaClientesView extends javax.swing.JInternalFrame {
     private ClienteDao clienteDao;
     private DefaultListModel<Cliente> clienteListModel;
     SetIcon si = new SetIcon();
-    
+    JTable tabelaClientes = null;
+    int id = 0;
+    String nome = null;
+    String cpfCnpj = null;
+
     public CarregaClientesView() {
         initComponents();
         si.setIconFechar(jbFechar);
         clienteDao = new ClienteDao(EntityManagerUtil.getManager());
         clienteListModel = new DefaultListModel<>();
         carregarClientes();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -79,33 +85,50 @@ public class CarregaClientesView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbFecharActionPerformed
 
     private void carregarClientes() {
-    try {
-        // Criar a tabela com as colunas necessárias
-        Object[] colunas = {"ID", "Nome", "Documento"}; // Colunas da tabela
-        Object[] largura = {60, 200, 150}; // Largura das colunas
-        Object[] alinhamento = {"centro", "esquerda", "esquerda"}; // Alinhamento das colunas
-        JTable tabelaClientes = new Tabela().criarTabela(jpnClientes, largura, alinhamento, colunas);
+        try {
+            // Criar a tabela com as colunas necessárias
+            Object[] colunas = {"ID", "Nome", "Documento"}; // Colunas da tabela
+            Object[] largura = {60, 200, 150}; // Largura das colunas
+            Object[] alinhamento = {"centro", "esquerda", "esquerda"}; // Alinhamento das colunas
+            tabelaClientes = new Tabela().criarTabela(jpnClientes, largura, alinhamento, colunas);
 
-        // Limpar o modelo da tabela
-        DefaultTableModel modeloTabela = (DefaultTableModel) tabelaClientes.getModel();
-        modeloTabela.setRowCount(0);
+            // Limpar o modelo da tabela
+            DefaultTableModel modeloTabela = (DefaultTableModel) tabelaClientes.getModel();
+            modeloTabela.setRowCount(0);
 
-        // Carregar os clientes do banco de dados
-        ArrayList<Cliente> clientes = clienteDao.selectAllCliente();
-        if (clientes != null) {
-            for (Cliente cliente : clientes) {
-                // Adicionar cada cliente como uma nova linha na tabela
-                modeloTabela.addRow(new Object[]{cliente.getId(), cliente.getNome(), cliente.getCpfcnpj()});
+            // Carregar os clientes do banco de dados
+            ArrayList<Cliente> clientes = clienteDao.selectAllCliente();
+            if (clientes != null) {
+                for (Cliente cliente : clientes) {
+                    // Adicionar cada cliente como uma nova linha na tabela
+                    modeloTabela.addRow(new Object[]{cliente.getId(), cliente.getNome(), cliente.getCpfcnpj()});
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possível carregar os clientes.");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Não foi possível carregar os clientes.");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao criar a tabela de clientes.");
         }
-    } catch (NullPointerException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Erro ao criar a tabela de clientes.");
+        tabelaClientes.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) { // Verifica se a seleção está completa
+                    int selectedRow = tabelaClientes.getSelectedRow();
+                    if (selectedRow != -1) { // Verifica se alguma linha está selecionada
+                        DefaultTableModel model = (DefaultTableModel) tabelaClientes.getModel();
+                        // Obtém os valores da linha selecionada
+                        id = (Integer) model.getValueAt(selectedRow, 0); 
+                        nome = model.getValueAt(selectedRow, 1).toString(); 
+                        cpfCnpj = model.getValueAt(selectedRow, 2).toString(); 
+                        
+                        
+                        PdvView pdvView = new PdvView();
+                        pdvView.enviaDados(id, nome, cpfCnpj);
+                    }
+                }
+            }
+        });
     }
-}
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

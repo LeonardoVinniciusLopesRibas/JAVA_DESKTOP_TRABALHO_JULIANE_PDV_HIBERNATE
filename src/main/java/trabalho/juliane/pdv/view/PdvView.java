@@ -2,6 +2,7 @@ package trabalho.juliane.pdv.view;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
 import trabalho.juliane.pdv.util.PosicaoFormulario;
 import trabalho.juliane.pdv.util.SetIcon;
@@ -28,6 +29,9 @@ public class PdvView extends javax.swing.JFrame {
         jtfValorTotalPagar.setEditable(false);
         jtfValorTotalPago.setEditable(false);
         jtfValorTotalTroco.setEditable(false);
+        jtfId.setText(String.valueOf(id));
+        jtfNomeCliente.setText(nome);
+        jtfCpfCnpj.setText(cpfCnpj);
 
     }
 
@@ -66,6 +70,8 @@ public class PdvView extends javax.swing.JFrame {
         jbAddCliente = new javax.swing.JButton();
         jbSair = new javax.swing.JButton();
         jbDescontoTotal = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jtfId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 51, 255));
@@ -227,6 +233,12 @@ public class PdvView extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Nome");
 
+        jtfNomeCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfNomeClienteActionPerformed(evt);
+            }
+        });
+
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Cpf/Cnpj");
 
@@ -292,6 +304,9 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Id");
+
         jdFundo.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -309,6 +324,8 @@ public class PdvView extends javax.swing.JFrame {
         jdFundo.setLayer(jbAddCliente, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jbSair, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jbDescontoTotal, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdFundo.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jdFundo.setLayer(jtfId, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jdFundoLayout = new javax.swing.GroupLayout(jdFundo);
         jdFundo.setLayout(jdFundoLayout);
@@ -316,54 +333,84 @@ public class PdvView extends javax.swing.JFrame {
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdFundoLayout.createSequentialGroup()
                 .addGap(109, 109, 109)
-                .addComponent(jbFinalizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbFormaPagamento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbRemoverProduto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbDescontoTotal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbAddProduto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbAddCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbNovaVenda)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbSair)
-                .addContainerGap(390, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdFundoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
-            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jdFundoLayout.createSequentialGroup()
-                    .addGap(112, 112, 112)
-                    .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jdFundoLayout.createSequentialGroup()
-                            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jdFundoLayout.createSequentialGroup()
-                                    .addComponent(jtfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jtfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jdFundoLayout.createSequentialGroup()
+                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdFundoLayout.createSequentialGroup()
+                        .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jdFundoLayout.createSequentialGroup()
+                                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
-                                    .addGap(233, 233, 233)
-                                    .addComponent(jLabel8)))
-                            .addGap(36, 36, 36)
-                            .addComponent(btRemover))
-                        .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btRemoverDesconto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btRemoverFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addContainerGap(487, Short.MAX_VALUE)))
+                                    .addComponent(jtfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jdFundoLayout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jLabel8))
+                                    .addGroup(jdFundoLayout.createSequentialGroup()
+                                        .addComponent(jtfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btRemover))))
+                            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btRemoverDesconto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btRemoverFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
+                    .addGroup(jdFundoLayout.createSequentialGroup()
+                        .addComponent(jbFinalizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbFormaPagamento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbRemoverProduto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbDescontoTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbAddProduto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbAddCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbNovaVenda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbSair)
+                        .addContainerGap(390, Short.MAX_VALUE))))
         );
         jdFundoLayout.setVerticalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdFundoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40)
+                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jdFundoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(40, 40, 40))
+                    .addGroup(jdFundoLayout.createSequentialGroup()
+                        .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jdFundoLayout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jtfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jdFundoLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jtfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btRemover))))
+                        .addGap(18, 18, 18)
+                        .addComponent(btRemoverDesconto)
+                        .addGap(18, 18, 18)
+                        .addComponent(btRemoverFormaPagamento)
+                        .addGap(18, 18, 18)))
                 .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -374,24 +421,6 @@ public class PdvView extends javax.swing.JFrame {
                     .addComponent(jbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbDescontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
-            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jdFundoLayout.createSequentialGroup()
-                    .addGap(26, 26, 26)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(26, 26, 26)
-                    .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel8))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jtfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jtfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btRemover))
-                    .addGap(18, 18, 18)
-                    .addComponent(btRemoverDesconto)
-                    .addGap(18, 18, 18)
-                    .addComponent(btRemoverFormaPagamento)
-                    .addContainerGap(170, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -433,11 +462,11 @@ public class PdvView extends javax.swing.JFrame {
         /*
         CidadeVisao tela;
         form.abrirFormulario(tela = new CidadeVisao(), jDesktop);
-        */
-        
+         */
+
         CarregaClientesView ccv;
         pf.abrirFormulario(ccv = new CarregaClientesView(), jdFundo);
-        
+
     }//GEN-LAST:event_jbAddClienteActionPerformed
 
     private void jbNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovaVendaActionPerformed
@@ -457,6 +486,10 @@ public class PdvView extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_jbSairActionPerformed
+
+    private void jtfNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfNomeClienteActionPerformed
 
     public static void main(String args[]) {
 
@@ -503,6 +536,7 @@ public class PdvView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JButton jbAddCliente;
@@ -517,6 +551,7 @@ public class PdvView extends javax.swing.JFrame {
     public javax.swing.JTable jtbProdutos;
     public javax.swing.JTextField jtfCodigoRapido;
     public javax.swing.JTextField jtfCpfCnpj;
+    public javax.swing.JTextField jtfId;
     public javax.swing.JTextField jtfNomeCliente;
     public javax.swing.JTextField jtfValorTotalDesconto;
     public javax.swing.JTextField jtfValorTotalItens;
@@ -534,6 +569,19 @@ public class PdvView extends javax.swing.JFrame {
         jtfValorTotalPagar.setText("");
         jtfValorTotalPago.setText("");
         jtfValorTotalTroco.setText("");
+    }
+
+    void enviaDados(int id, String nome, String cpfCnpj) {
+
+//        JOptionPane.showMessageDialog(null, id);
+//        JOptionPane.showMessageDialog(null, nome);
+//        JOptionPane.showMessageDialog(null, cpfCnpj);
+
+        
+        id = id;
+        nome = nome;
+        cpfCnpj = cpfCnpj;
+
     }
 
 }
