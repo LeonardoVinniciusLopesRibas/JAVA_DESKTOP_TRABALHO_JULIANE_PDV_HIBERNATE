@@ -7,7 +7,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -61,14 +60,17 @@ public class PdvView extends javax.swing.JFrame {
                 // Verifica se a alteração ocorreu na coluna de quantidade
                 if (e.getColumn() == 3) {
                     calcularValorTotalCompra();
+                    atualizarValorTotalPagar();
                 }
-                if(e.getColumn() == 5){
+                if (e.getColumn() == 5) {
                     calculaValorTotalDesconto();
+                    atualizarValorTotalPagar();
                 }
             }
         });
         calcularValorTotalCompra();
         calculaValorTotalDesconto();
+        atualizarValorTotalPagar();
 
         jtbProdutos.addMouseListener(new MouseAdapter() {
             @Override
@@ -79,7 +81,6 @@ public class PdvView extends javax.swing.JFrame {
                 } else {
                     jtbProdutos.clearSelection();
                 }
-
                 int rowindex = jtbProdutos.getSelectedRow();
                 if (rowindex < 0) {
                     return;
@@ -103,6 +104,7 @@ public class PdvView extends javax.swing.JFrame {
                     model.removeRow(selectedRow);
                     calcularValorTotalCompra();
                     calculaValorTotalDesconto();
+                    atualizarValorTotalPagar();
                 }
             }
         });
@@ -523,41 +525,29 @@ public class PdvView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jbFinalizarActionPerformed
 
     private void jbFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFormaPagamentoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jbFormaPagamentoActionPerformed
 
     private void jbRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverProdutoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jbRemoverProdutoActionPerformed
 
     private void jbDescontoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDescontoTotalActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jbDescontoTotalActionPerformed
 
     private void jbAddProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddProdutoActionPerformed
-        // TODO add your handling code here:
         CarregaProdutosView cpv = new CarregaProdutosView(this);
         pf.abrirFormulario(cpv, jdFundo);
     }//GEN-LAST:event_jbAddProdutoActionPerformed
 
     private void jbAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddClienteActionPerformed
-        // TODO add your handling code here:
-        /*
-        CidadeVisao tela;
-        form.abrirFormulario(tela = new CidadeVisao(), jDesktop);
-         */
-
         CarregaClientesView ccv = new CarregaClientesView(this);
         pf.abrirFormulario(ccv, jdFundo);
 
     }//GEN-LAST:event_jbAddClienteActionPerformed
 
     private void jbNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovaVendaActionPerformed
-        // TODO add your handling code here:
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente limpar os campos?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
         if (resposta == JOptionPane.YES_OPTION) {
@@ -566,7 +556,6 @@ public class PdvView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbNovaVendaActionPerformed
 
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
-        // TODO add your handling code here:
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente sair do sistema?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
         if (resposta == JOptionPane.YES_OPTION) {
@@ -575,11 +564,9 @@ public class PdvView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbSairActionPerformed
 
     private void jtfNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeClienteActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jtfNomeClienteActionPerformed
 
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-        // TODO add your handling code here:
 
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover o cliente da venda?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
@@ -591,7 +578,6 @@ public class PdvView extends javax.swing.JFrame {
     }//GEN-LAST:event_btRemoverActionPerformed
 
     public static void main(String args[]) {
-
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -613,7 +599,6 @@ public class PdvView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PdvView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 EntityManagerUtil.getEntityManagerFactory();
@@ -621,8 +606,6 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btRemover;
     private javax.swing.JButton btRemoverDesconto;
@@ -658,9 +641,7 @@ public class PdvView extends javax.swing.JFrame {
     public javax.swing.JTextField jtfValorTotalPago;
     public javax.swing.JTextField jtfValorTotalTroco;
     // End of variables declaration//GEN-END:variables
-
     protected void limpaCampos() {
-
         jtfId.setText("");
         jtfCpfCnpj.setText("");
         jtfNomeCliente.setText("");
@@ -674,7 +655,6 @@ public class PdvView extends javax.swing.JFrame {
     }
 
     void enviaDados(int id, String nome, String cpfCnpj) {
-
         jtfId.setText(String.valueOf(id));
         jtfNomeCliente.setText(nome);
         jtfCpfCnpj.setText(cpfCnpj);
@@ -682,16 +662,11 @@ public class PdvView extends javax.swing.JFrame {
     }
 
     void enviaDadosProdutos(int id, String codigorapido, String descricao, int qtd, double valorvenda, double desconto) {
-
-//        JOptionPane.showMessageDialog(null, id);
-//        JOptionPane.showMessageDialog(null, codigorapido);
-//        JOptionPane.showMessageDialog(null, descricao);
-//        JOptionPane.showMessageDialog(null, valorvenda);
         Object[] dados = {id, codigorapido, descricao, qtd, valorvenda, desconto};
         tableModel.addRow(dados);
         calcularValorTotalCompra();
         calculaValorTotalDesconto();
-
+        atualizarValorTotalPagar();
     }
 
     private void calcularValorTotalCompra() {
@@ -713,4 +688,26 @@ public class PdvView extends javax.swing.JFrame {
         }
         jtfValorTotalDesconto.setText(String.valueOf(totalDesc));
     }
+
+    private void atualizarValorTotalPagar() {
+    double valorItens = Double.parseDouble(jtfValorTotalItens.getText());
+    double valorDesconto = Double.parseDouble(jtfValorTotalDesconto.getText());
+    
+    if (valorDesconto > valorItens) {
+        JOptionPane.showMessageDialog(null, "Não é possível informar desconto maior que o valor total");
+        
+        // Definir o valor do desconto para 0.0
+        int row = jtbProdutos.getSelectedRow();
+        if (row != -1) {
+            tableModel.setValueAt(0.0, row, 5); // Coluna 5 é a coluna do desconto
+        }
+        
+        // Recalcular o valor do desconto
+        valorDesconto = 0.0;
+    }
+    
+    double valorPagar = valorItens - valorDesconto;
+    jtfValorTotalPagar.setText(String.valueOf(valorPagar));
+}
+
 }
