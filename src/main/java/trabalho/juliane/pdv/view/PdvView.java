@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import trabalho.juliane.pdv.util.CustomRowHeight;
 import trabalho.juliane.pdv.util.CustomTableModel;
@@ -53,6 +55,16 @@ public class PdvView extends javax.swing.JFrame {
         jtfNomeCliente.setEditable(false);
         jtfCpfCnpj.setEditable(false);
         jtbProdutos.setDefaultRenderer(Object.class, new CustomRowHeight(rowHeight));
+        jtbProdutos.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                // Verifica se a alteração ocorreu na coluna de quantidade
+                if (e.getColumn() == 3) {
+                    calcularValorTotalCompra();
+                }
+            }
+        });
+        calcularValorTotalCompra();
 
         jtbProdutos.addMouseListener(new MouseAdapter() {
             @Override
@@ -85,6 +97,7 @@ public class PdvView extends javax.swing.JFrame {
                 if (selectedRow != -1) {
                     DefaultTableModel model = (DefaultTableModel) jtbProdutos.getModel();
                     model.removeRow(selectedRow);
+                    calcularValorTotalCompra();
                 }
             }
         });
@@ -671,7 +684,19 @@ public class PdvView extends javax.swing.JFrame {
 //        JOptionPane.showMessageDialog(null, valorvenda);
         Object[] dados = {id, codigorapido, descricao, qtd, valorvenda};
         tableModel.addRow(dados);
+        calcularValorTotalCompra();
 
+    }
+
+    private void calcularValorTotalCompra() {
+        double total = 0.0;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            int quantidade = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
+            double valorUnitario = Double.parseDouble(tableModel.getValueAt(i, 4).toString());
+            double subtotal = quantidade * valorUnitario;
+            total += subtotal;
+        }
+        jtfValorTotalItens.setText(String.valueOf(total));
     }
 
 }
