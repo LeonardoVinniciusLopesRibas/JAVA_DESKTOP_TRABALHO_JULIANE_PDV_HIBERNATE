@@ -27,6 +27,7 @@ public class CarregaProdutosView extends javax.swing.JInternalFrame {
     String descricao = null;
     int qtd = 0;
     double valorvenda = 0.0;
+    double desconto = 0.0;
     private PdvView pdvView;
     
     public CarregaProdutosView(PdvView pdvView) {
@@ -124,15 +125,16 @@ public class CarregaProdutosView extends javax.swing.JInternalFrame {
                         descricao = model.getValueAt(selectedRow, 2).toString();
                         qtd = 1;
                         valorvenda = (Double) model.getValueAt(selectedRow, 3);
-                        enviarDadosProdutos(id, codigorapido, descricao, qtd, valorvenda);
+                        desconto = 0.0;
+                        enviarDadosProdutos(id, codigorapido, descricao, qtd, valorvenda, desconto);
                     }
                     
                 }
             }
 
-            private void enviarDadosProdutos(int id, String codigorapido, String descricao, int qtd, double valorvenda) {
+            private void enviarDadosProdutos(int id, String codigorapido, String descricao, int qtd, double valorvenda, double desconto) {
                 
-                pdvView.enviaDadosProdutos(id, codigorapido, descricao, qtd, valorvenda);
+                pdvView.enviaDadosProdutos(id, codigorapido, descricao, qtd, valorvenda, desconto);
                 dispose();
                 
             }

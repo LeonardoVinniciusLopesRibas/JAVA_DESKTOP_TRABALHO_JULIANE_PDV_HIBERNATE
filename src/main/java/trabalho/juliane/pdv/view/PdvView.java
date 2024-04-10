@@ -62,9 +62,13 @@ public class PdvView extends javax.swing.JFrame {
                 if (e.getColumn() == 3) {
                     calcularValorTotalCompra();
                 }
+                if(e.getColumn() == 5){
+                    calculaValorTotalDesconto();
+                }
             }
         });
         calcularValorTotalCompra();
+        calculaValorTotalDesconto();
 
         jtbProdutos.addMouseListener(new MouseAdapter() {
             @Override
@@ -98,6 +102,7 @@ public class PdvView extends javax.swing.JFrame {
                     DefaultTableModel model = (DefaultTableModel) jtbProdutos.getModel();
                     model.removeRow(selectedRow);
                     calcularValorTotalCompra();
+                    calculaValorTotalDesconto();
                 }
             }
         });
@@ -676,15 +681,16 @@ public class PdvView extends javax.swing.JFrame {
 
     }
 
-    void enviaDadosProdutos(int id, String codigorapido, String descricao, int qtd, double valorvenda) {
+    void enviaDadosProdutos(int id, String codigorapido, String descricao, int qtd, double valorvenda, double desconto) {
 
 //        JOptionPane.showMessageDialog(null, id);
 //        JOptionPane.showMessageDialog(null, codigorapido);
 //        JOptionPane.showMessageDialog(null, descricao);
 //        JOptionPane.showMessageDialog(null, valorvenda);
-        Object[] dados = {id, codigorapido, descricao, qtd, valorvenda};
+        Object[] dados = {id, codigorapido, descricao, qtd, valorvenda, desconto};
         tableModel.addRow(dados);
         calcularValorTotalCompra();
+        calculaValorTotalDesconto();
 
     }
 
@@ -699,4 +705,12 @@ public class PdvView extends javax.swing.JFrame {
         jtfValorTotalItens.setText(String.valueOf(total));
     }
 
+    private void calculaValorTotalDesconto() {
+        double totalDesc = 0.0;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            double desc = Double.parseDouble(tableModel.getValueAt(i, 5).toString());
+            totalDesc += desc;
+        }
+        jtfValorTotalDesconto.setText(String.valueOf(totalDesc));
+    }
 }
