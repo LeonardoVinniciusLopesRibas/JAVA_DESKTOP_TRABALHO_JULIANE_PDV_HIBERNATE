@@ -3,6 +3,8 @@ package trabalho.juliane.pdv.view;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import trabalho.juliane.pdv.util.CustomTableModel;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
 import trabalho.juliane.pdv.util.PosicaoFormulario;
 import trabalho.juliane.pdv.util.SetIcon;
@@ -13,10 +15,18 @@ public class PdvView extends javax.swing.JFrame {
     SetIcon si = new SetIcon();
     PosicaoFormulario pf = new PosicaoFormulario();
     private TabelaProdutos tabelaProdutos;
+    private DefaultTableModel tableModel;
 
     public PdvView() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        tableModel = new CustomTableModel();
+        tableModel.addColumn("Id");
+        tableModel.addColumn("Código Rápido");
+        tableModel.addColumn("Descrição");
+        tableModel.addColumn("Valor de Venda");
+        tableModel.addColumn("Desconto");
+        jtbProdutos.setModel(tableModel);
         si.setIconFinalizar(jbFinalizar);
         si.setFormaPagamento(jbFormaPagamento);
         si.setRemoverProduto(jbRemoverProduto);
@@ -34,7 +44,7 @@ public class PdvView extends javax.swing.JFrame {
         jtfId.setEditable(false);
         jtfNomeCliente.setEditable(false);
         jtfCpfCnpj.setEditable(false);
-
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -187,36 +197,36 @@ public class PdvView extends javax.swing.JFrame {
 
         jtbProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOME", "QUANTIDADE", "VALOR", "DESCONTO"
+                "ID", "COD RAPIDO", "NOME", "QUANTIDADE", "VALOR", "DESCONTO"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -462,6 +472,8 @@ public class PdvView extends javax.swing.JFrame {
 
     private void jbAddProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddProdutoActionPerformed
         // TODO add your handling code here:
+        CarregaProdutosView cpv = new CarregaProdutosView(this);
+        pf.abrirFormulario(cpv, jdFundo);
     }//GEN-LAST:event_jbAddProdutoActionPerformed
 
     private void jbAddClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddClienteActionPerformed
@@ -581,6 +593,7 @@ public class PdvView extends javax.swing.JFrame {
 
     protected void limpaCampos() {
 
+        jtfId.setText("");
         jtfCpfCnpj.setText("");
         jtfNomeCliente.setText("");
         jtfValorTotalDesconto.setText("");
@@ -588,6 +601,8 @@ public class PdvView extends javax.swing.JFrame {
         jtfValorTotalPagar.setText("");
         jtfValorTotalPago.setText("");
         jtfValorTotalTroco.setText("");
+        DefaultTableModel model = (DefaultTableModel) jtbProdutos.getModel();
+        model.setRowCount(0);
     }
 
     void enviaDados(int id, String nome, String cpfCnpj) {
@@ -595,6 +610,18 @@ public class PdvView extends javax.swing.JFrame {
         jtfId.setText(String.valueOf(id));
         jtfNomeCliente.setText(nome);
         jtfCpfCnpj.setText(cpfCnpj);
+
+    }
+
+    void enviaDadosProdutos(int id, String codigorapido, String descricao, double valorvenda) {
+
+//        JOptionPane.showMessageDialog(null, id);
+//        JOptionPane.showMessageDialog(null, codigorapido);
+//        JOptionPane.showMessageDialog(null, descricao);
+//        JOptionPane.showMessageDialog(null, valorvenda);
+
+        Object[] dados = {id, codigorapido, descricao, valorvenda};
+        tableModel.addRow(dados);
 
     }
 

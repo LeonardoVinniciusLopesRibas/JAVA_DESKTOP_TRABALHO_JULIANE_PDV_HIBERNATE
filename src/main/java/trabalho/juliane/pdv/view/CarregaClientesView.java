@@ -12,7 +12,6 @@ import trabalho.juliane.pdv.model.Cliente;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
 import trabalho.juliane.pdv.util.SetIcon;
 import trabalho.juliane.pdv.util.Tabela;
-import trabalho.juliane.pdv.view.PdvView;
 
 public class CarregaClientesView extends javax.swing.JInternalFrame {
 
@@ -103,6 +102,7 @@ public class CarregaClientesView extends javax.swing.JInternalFrame {
 
             // Carregar os clientes do banco de dados
             ArrayList<Cliente> clientes = clienteDao.selectAllCliente();
+            
             if (clientes != null) {
                 for (Cliente cliente : clientes) {
                     // Adicionar cada cliente como uma nova linha na tabela

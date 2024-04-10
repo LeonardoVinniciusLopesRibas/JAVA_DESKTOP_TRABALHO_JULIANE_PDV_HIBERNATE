@@ -6,7 +6,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import trabalho.juliane.pdv.interfaces.ProdutoInterfaces;
-import trabalho.juliane.pdv.model.ItemVenda;
 import trabalho.juliane.pdv.model.Produto;
 
 public class ProdutoDao implements ProdutoInterfaces{
@@ -38,10 +37,11 @@ public class ProdutoDao implements ProdutoInterfaces{
 
         ArrayList<Produto> produtos = null;
         try {
-            TypedQuery<Produto> query = em.createQuery("SELECT iv FROM ItemVenda iv", Produto.class);
+            TypedQuery<Produto> query = em.createQuery("SELECT p FROM Produto p", Produto.class);
             produtos = (ArrayList<Produto>) query.getResultList();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar todos os itens de venda: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return produtos;
 
@@ -55,6 +55,16 @@ public class ProdutoDao implements ProdutoInterfaces{
             produto = em.find(Produto.class, id);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar o item de venda pelo ID: " + e.getMessage());
+        }
+        return produto;
+    }
+    
+    public Produto selectByCodigoRapidoProduto(String codigorapido){
+        Produto produto = null;
+        try{
+            produto = em.find(Produto.class, codigorapido);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao buscar o produto pelo codigo rapido"+e.getMessage());
         }
         return produto;
     }
