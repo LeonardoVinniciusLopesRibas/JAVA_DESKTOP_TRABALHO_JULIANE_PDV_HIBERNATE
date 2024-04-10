@@ -86,5 +86,13 @@ public class SetIcon {
         jbFechar.setIcon(imageIcon);
 
     }
+
+    public void setIconEnviar(JButton jbEnviar) {
+
+        Image iconImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\leona\\OneDrive\\Documentos\\NetBeansProjects\\TrabalhoJulianePdv\\TrabalhoJulianePdv\\src\\main\\java\\trabalho\\juliane\\pdv\\icon\\addCliente.png");
+        ImageIcon imageIcon = new ImageIcon(iconImage);
+        jbEnviar.setIcon(imageIcon);
+
+    }
     
 }

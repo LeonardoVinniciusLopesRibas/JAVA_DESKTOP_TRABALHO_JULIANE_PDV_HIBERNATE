@@ -6,11 +6,13 @@ import javax.swing.JTextField;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
 import trabalho.juliane.pdv.util.PosicaoFormulario;
 import trabalho.juliane.pdv.util.SetIcon;
+import trabalho.juliane.pdv.util.TabelaProdutos;
 
 public class PdvView extends javax.swing.JFrame {
 
     SetIcon si = new SetIcon();
     PosicaoFormulario pf = new PosicaoFormulario();
+    private TabelaProdutos tabelaProdutos;
 
     public PdvView() {
         initComponents();
@@ -29,9 +31,9 @@ public class PdvView extends javax.swing.JFrame {
         jtfValorTotalPagar.setEditable(false);
         jtfValorTotalPago.setEditable(false);
         jtfValorTotalTroco.setEditable(false);
-        jtfId.setText(String.valueOf(id));
-        jtfNomeCliente.setText(nome);
-        jtfCpfCnpj.setText(cpfCnpj);
+        jtfId.setEditable(false);
+        jtfNomeCliente.setEditable(false);
+        jtfCpfCnpj.setEditable(false);
 
     }
 
@@ -243,6 +245,11 @@ public class PdvView extends javax.swing.JFrame {
         jLabel8.setText("Cpf/Cnpj");
 
         btRemover.setText("Remover");
+        btRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverActionPerformed(evt);
+            }
+        });
 
         btRemoverDesconto.setText("Remover Desconto");
 
@@ -464,8 +471,8 @@ public class PdvView extends javax.swing.JFrame {
         form.abrirFormulario(tela = new CidadeVisao(), jDesktop);
          */
 
-        CarregaClientesView ccv;
-        pf.abrirFormulario(ccv = new CarregaClientesView(), jdFundo);
+        CarregaClientesView ccv = new CarregaClientesView(this);
+        pf.abrirFormulario(ccv, jdFundo);
 
     }//GEN-LAST:event_jbAddClienteActionPerformed
 
@@ -490,6 +497,18 @@ public class PdvView extends javax.swing.JFrame {
     private void jtfNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfNomeClienteActionPerformed
+
+    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+        // TODO add your handling code here:
+
+        int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover o cliente da venda?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            jtfId.setText("");
+            jtfNomeCliente.setText("");
+            jtfCpfCnpj.setText("");
+        }
+    }//GEN-LAST:event_btRemoverActionPerformed
 
     public static void main(String args[]) {
 
@@ -561,7 +580,7 @@ public class PdvView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     protected void limpaCampos() {
-        jtbProdutos.clearSelection();
+
         jtfCpfCnpj.setText("");
         jtfNomeCliente.setText("");
         jtfValorTotalDesconto.setText("");
@@ -573,14 +592,9 @@ public class PdvView extends javax.swing.JFrame {
 
     void enviaDados(int id, String nome, String cpfCnpj) {
 
-//        JOptionPane.showMessageDialog(null, id);
-//        JOptionPane.showMessageDialog(null, nome);
-//        JOptionPane.showMessageDialog(null, cpfCnpj);
-
-        
-        id = id;
-        nome = nome;
-        cpfCnpj = cpfCnpj;
+        jtfId.setText(String.valueOf(id));
+        jtfNomeCliente.setText(nome);
+        jtfCpfCnpj.setText(cpfCnpj);
 
     }
 

@@ -12,23 +12,28 @@ import trabalho.juliane.pdv.model.Cliente;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
 import trabalho.juliane.pdv.util.SetIcon;
 import trabalho.juliane.pdv.util.Tabela;
+import trabalho.juliane.pdv.view.PdvView;
 
 public class CarregaClientesView extends javax.swing.JInternalFrame {
 
     private ClienteDao clienteDao;
     private DefaultListModel<Cliente> clienteListModel;
+    
     SetIcon si = new SetIcon();
     JTable tabelaClientes = null;
     int id = 0;
     String nome = null;
     String cpfCnpj = null;
+    private PdvView pdvView;
 
-    public CarregaClientesView() {
+    public CarregaClientesView(PdvView pdvView) {
         initComponents();
         si.setIconFechar(jbFechar);
         clienteDao = new ClienteDao(EntityManagerUtil.getManager());
         clienteListModel = new DefaultListModel<>();
         carregarClientes();
+        this.pdvView = pdvView;
+        
 
     }
 
@@ -120,14 +125,20 @@ public class CarregaClientesView extends javax.swing.JInternalFrame {
                         id = (Integer) model.getValueAt(selectedRow, 0); 
                         nome = model.getValueAt(selectedRow, 1).toString(); 
                         cpfCnpj = model.getValueAt(selectedRow, 2).toString(); 
+                        enviarDados(id, nome, cpfCnpj);
                         
-                        
-                        PdvView pdvView = new PdvView();
-                        pdvView.enviaDados(id, nome, cpfCnpj);
+//                        PdvView pdvView = new PdvView();
+//                        pdvView.enviaDados(id, nome, cpfCnpj);
+//                        dispose();
                     }
                 }
             }
         });
+        
+    }
+    private void enviarDados(int id, String nome, String cpfCnpj){
+        pdvView.enviaDados(id, nome, cpfCnpj);
+        dispose();
     }
 
 
