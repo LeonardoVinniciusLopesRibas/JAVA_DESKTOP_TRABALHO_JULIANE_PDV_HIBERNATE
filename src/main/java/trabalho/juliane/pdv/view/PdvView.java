@@ -1,9 +1,15 @@
 package trabalho.juliane.pdv.view;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import trabalho.juliane.pdv.util.CustomRowHeight;
 import trabalho.juliane.pdv.util.CustomTableModel;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
 import trabalho.juliane.pdv.util.PosicaoFormulario;
@@ -14,8 +20,10 @@ public class PdvView extends javax.swing.JFrame {
 
     SetIcon si = new SetIcon();
     PosicaoFormulario pf = new PosicaoFormulario();
+    CustomRowHeight crh = new CustomRowHeight();
     private TabelaProdutos tabelaProdutos;
     private DefaultTableModel tableModel;
+    int rowHeight = 40;
 
     public PdvView() {
         initComponents();
@@ -24,7 +32,8 @@ public class PdvView extends javax.swing.JFrame {
         tableModel.addColumn("Id");
         tableModel.addColumn("Código Rápido");
         tableModel.addColumn("Descrição");
-        tableModel.addColumn("Valor de Venda");
+        tableModel.addColumn("Quantidade");
+        tableModel.addColumn("Valor Unitário");
         tableModel.addColumn("Desconto");
         jtbProdutos.setModel(tableModel);
         si.setIconFinalizar(jbFinalizar);
@@ -35,7 +44,6 @@ public class PdvView extends javax.swing.JFrame {
         si.setAdicionarCliente(jbAddCliente);
         si.setNovaVenda(jbNovaVenda);
         si.setSair(jbSair);
-        jtfCodigoRapido.setEditable(false);
         jtfValorTotalDesconto.setEditable(false);
         jtfValorTotalItens.setEditable(false);
         jtfValorTotalPagar.setEditable(false);
@@ -44,7 +52,43 @@ public class PdvView extends javax.swing.JFrame {
         jtfId.setEditable(false);
         jtfNomeCliente.setEditable(false);
         jtfCpfCnpj.setEditable(false);
-        
+        jtbProdutos.setDefaultRenderer(Object.class, new CustomRowHeight(rowHeight));
+
+        jtbProdutos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                int r = jtbProdutos.rowAtPoint(e.getPoint());
+                if (r >= 0 && r < jtbProdutos.getRowCount()) {
+                    jtbProdutos.setRowSelectionInterval(r, r);
+                } else {
+                    jtbProdutos.clearSelection();
+                }
+
+                int rowindex = jtbProdutos.getSelectedRow();
+                if (rowindex < 0) {
+                    return;
+                }
+                if (e.isPopupTrigger() && e.getComponent() instanceof JTable) {
+                    JPopupMenu popup = new JPopupMenu();
+                    JMenuItem removeItem = new JMenuItem("Remover Produto");
+                    removeItem.addActionListener(e1 -> {
+                        // Chamamos o método para remover o produto
+                        removerProdutoSelecionado();
+                    });
+                    popup.add(removeItem);
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+
+            private void removerProdutoSelecionado() {
+                int selectedRow = jtbProdutos.getSelectedRow();
+                if (selectedRow != -1) {
+                    DefaultTableModel model = (DefaultTableModel) jtbProdutos.getModel();
+                    model.removeRow(selectedRow);
+                }
+            }
+        });
+
     }
 
     @SuppressWarnings("unchecked")
@@ -195,6 +239,7 @@ public class PdvView extends javax.swing.JFrame {
                     .addContainerGap(494, Short.MAX_VALUE)))
         );
 
+        jtbProdutos.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jtbProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -279,6 +324,7 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbAddProduto.setMnemonic('P');
         jbAddProduto.setText("Adicionar Produto");
         jbAddProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,6 +339,7 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbNovaVenda.setMnemonic('N');
         jbNovaVenda.setText("Nova Venda");
         jbNovaVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,6 +347,7 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbAddCliente.setMnemonic('C');
         jbAddCliente.setText("Adicionar Cliente");
         jbAddCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -307,6 +355,7 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbSair.setMnemonic('S');
         jbSair.setText("Sair");
         jbSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -314,6 +363,7 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbDescontoTotal.setMnemonic('D');
         jbDescontoTotal.setText("Desconto Total");
         jbDescontoTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -613,14 +663,13 @@ public class PdvView extends javax.swing.JFrame {
 
     }
 
-    void enviaDadosProdutos(int id, String codigorapido, String descricao, double valorvenda) {
+    void enviaDadosProdutos(int id, String codigorapido, String descricao, int qtd, double valorvenda) {
 
 //        JOptionPane.showMessageDialog(null, id);
 //        JOptionPane.showMessageDialog(null, codigorapido);
 //        JOptionPane.showMessageDialog(null, descricao);
 //        JOptionPane.showMessageDialog(null, valorvenda);
-
-        Object[] dados = {id, codigorapido, descricao, valorvenda};
+        Object[] dados = {id, codigorapido, descricao, qtd, valorvenda};
         tableModel.addRow(dados);
 
     }

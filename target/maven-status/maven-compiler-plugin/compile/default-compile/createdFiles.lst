@@ -24,6 +24,7 @@ trabalho\juliane\pdv\view\PdvView$8.class
 trabalho\juliane\pdv\util\PosicaoFormulario.class
 trabalho\juliane\pdv\view\CarregaProdutosView$2.class
 trabalho\juliane\pdv\view\CarregaClientesView$2.class
+trabalho\juliane\pdv\view\PdvView$13.class
 trabalho\juliane\pdv\controller\ItemVendaController.class
 trabalho\juliane\pdv\view\PdvView$6.class
 trabalho\juliane\pdv\dao\VendaDao.class
@@ -36,6 +37,7 @@ trabalho\juliane\pdv\view\PdvView$4.class
 trabalho\juliane\pdv\model\Venda.class
 trabalho\juliane\pdv\view\PdvView.class
 trabalho\juliane\pdv\interfaces\ProdutoInterfaces.class
+trabalho\juliane\pdv\util\CustomRowHeight.class
 trabalho\juliane\pdv\view\PdvView$10.class
 trabalho\juliane\pdv\dao\ProdutoDao.class
 trabalho\juliane\pdv\util\EntityManagerUtil.class
