@@ -15,14 +15,6 @@ public class SetIcon {
 
     }
 
-    public void setFormaPagamento(JButton jbFormaPagamento) {
-
-        Image iconImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\leona\\OneDrive\\Documentos\\NetBeansProjects\\TrabalhoJulianePdv\\TrabalhoJulianePdv\\src\\main\\java\\trabalho\\juliane\\pdv\\icon\\formaPagamento.png");
-        ImageIcon imageIcon = new ImageIcon(iconImage);
-        jbFormaPagamento.setIcon(imageIcon);
-
-    }
-
     public void setRemoverDesconto(JButton jbRemoverDesconto) {
 
         Image iconImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\leona\\OneDrive\\Documentos\\NetBeansProjects\\TrabalhoJulianePdv\\TrabalhoJulianePdv\\src\\main\\java\\trabalho\\juliane\\pdv\\icon\\removerDesconto.png");
