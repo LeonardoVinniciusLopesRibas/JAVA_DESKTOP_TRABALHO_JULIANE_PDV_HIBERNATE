@@ -334,8 +334,13 @@ public class PdvView extends javax.swing.JFrame {
         });
 
         btRemoverDesconto.setText("Remover Desconto");
+        btRemoverDesconto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRemoverDescontoActionPerformed(evt);
+            }
+        });
 
-        btRemoverFormaPagamento.setText("Remover Forma de Pagamento");
+        btRemoverFormaPagamento.setText("Remover Pagamento");
 
         jbFormaPagamento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbFormaPagamento.setText("Pagamento");
@@ -429,9 +434,6 @@ public class PdvView extends javax.swing.JFrame {
                 .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jdFundoLayout.createSequentialGroup()
                         .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btRemoverDesconto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btRemoverFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jdFundoLayout.createSequentialGroup()
                                 .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,7 +451,10 @@ public class PdvView extends javax.swing.JFrame {
                                     .addGroup(jdFundoLayout.createSequentialGroup()
                                         .addComponent(jtfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(btRemover)))))
+                                        .addComponent(btRemover))))
+                            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btRemoverFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                                .addComponent(btRemoverDesconto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
@@ -582,6 +587,14 @@ public class PdvView extends javax.swing.JFrame {
             jtfCpfCnpj.setText("");
         }
     }//GEN-LAST:event_btRemoverActionPerformed
+
+    private void btRemoverDescontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverDescontoActionPerformed
+        // TODO add your handling code here:
+        int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover o desconto de todos os produtos?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            removerDescontoProdutos();
+        }
+    }//GEN-LAST:event_btRemoverDescontoActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -749,6 +762,15 @@ public class PdvView extends javax.swing.JFrame {
         // Atualiza o valor total a pagar
         double novoValorPagar = totalItens - totalDesconto;
         jtfValorTotalPagar.setText(String.valueOf(novoValorPagar));
+    }
+
+    private void removerDescontoProdutos() {
+        int rowCount = tableModel.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            tableModel.setValueAt(0.0, i, 5); // Define o valor do desconto como zero para todas as linhas
+        }
+        jtfValorTotalDesconto.setText("0.0"); // Atualiza o campo de texto do valor total do desconto
+        atualizarValorTotalPagar(); // Atualiza o valor total a pagar após remover os descontos
     }
 
 }

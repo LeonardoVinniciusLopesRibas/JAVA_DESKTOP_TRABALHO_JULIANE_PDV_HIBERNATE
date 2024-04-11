@@ -46,10 +46,6 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btRemoverDesconto" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btRemoverFormaPagamento" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Component id="jScrollPane1" min="-2" pref="805" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -73,6 +69,10 @@
                                           <Component id="btRemover" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="btRemoverFormaPagamento" alignment="0" pref="145" max="32767" attributes="0"/>
+                                  <Component id="btRemoverDesconto" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="85" max="32767" attributes="0"/>
@@ -488,10 +488,13 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Remover Desconto"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRemoverDescontoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btRemoverFormaPagamento">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Remover Forma de Pagamento"/>
+            <Property name="text" type="java.lang.String" value="Remover Pagamento"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jbFormaPagamento">
