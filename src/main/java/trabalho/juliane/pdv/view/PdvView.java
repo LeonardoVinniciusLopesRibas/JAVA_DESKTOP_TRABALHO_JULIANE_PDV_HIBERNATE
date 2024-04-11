@@ -172,6 +172,11 @@ public class PdvView extends javax.swing.JFrame {
         jLabel2.setText("Código Rápido");
 
         jtfCodigoRapido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jtfCodigoRapido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfCodigoRapidoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -316,12 +321,6 @@ public class PdvView extends javax.swing.JFrame {
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Nome");
-
-        jtfNomeCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfNomeClienteActionPerformed(evt);
-            }
-        });
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Cpf/Cnpj");
@@ -574,9 +573,6 @@ public class PdvView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbSairActionPerformed
 
-    private void jtfNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeClienteActionPerformed
-    }//GEN-LAST:event_jtfNomeClienteActionPerformed
-
     private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
 
         int resposta = JOptionPane.showConfirmDialog(null, "Deseja remover o cliente da venda?", "Confirmação", JOptionPane.YES_NO_OPTION);
@@ -595,6 +591,10 @@ public class PdvView extends javax.swing.JFrame {
             removerDescontoProdutos();
         }
     }//GEN-LAST:event_btRemoverDescontoActionPerformed
+
+    private void jtfCodigoRapidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodigoRapidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfCodigoRapidoActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
