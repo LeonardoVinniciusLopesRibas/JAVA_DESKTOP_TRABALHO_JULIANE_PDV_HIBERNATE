@@ -1,15 +1,20 @@
 package trabalho.juliane.pdv.view;
 
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.persistence.EntityManager;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import trabalho.juliane.pdv.dao.ProdutoDao;
+import trabalho.juliane.pdv.model.Produto;
 import trabalho.juliane.pdv.util.CustomRowHeight;
 import trabalho.juliane.pdv.util.CustomTableModel;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
@@ -60,7 +65,6 @@ public class PdvView extends javax.swing.JFrame {
         jtbProdutos.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                // Verifica se a alteração ocorreu na coluna de quantidade
                 if (e.getColumn() == 3) {
                     calcularValorTotalCompra();
                     atualizarValorTotalPagar();
@@ -74,7 +78,6 @@ public class PdvView extends javax.swing.JFrame {
         calcularValorTotalCompra();
         calculaValorTotalDesconto();
         atualizarValorTotalPagar();
-
         jtbProdutos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -92,7 +95,6 @@ public class PdvView extends javax.swing.JFrame {
                     JPopupMenu popup = new JPopupMenu();
                     JMenuItem removeItem = new JMenuItem("Remover Produto");
                     removeItem.addActionListener(e1 -> {
-                        // Chamamos o método para remover o produto
                         removerProdutoSelecionado();
                     });
                     popup.add(removeItem);
@@ -109,9 +111,23 @@ public class PdvView extends javax.swing.JFrame {
                     calculaValorTotalDesconto();
                     atualizarValorTotalPagar();
                     if (model.getRowCount() == 0) {
-                        // Se não houver, desabilitar os botões
                         jbFormaPagamento.setEnabled(false);
                         jbDescontoTotal.setEnabled(false);
+                    }
+                }
+            }
+        });
+        jtbProdutos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int columnIndex = jtbProdutos.getSelectedColumn();
+                if (columnIndex == 3 || columnIndex == 5) {
+                    jtbProdutos.editCellAt(jtbProdutos.getSelectedRow(), columnIndex);
+                    Component editor = jtbProdutos.getEditorComponent();
+                    if (editor instanceof JTextField) {
+                        JTextField textField = (JTextField) editor;
+                        textField.selectAll();
+                        textField.requestFocusInWindow();
                     }
                 }
             }
@@ -538,8 +554,8 @@ public class PdvView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbFormaPagamentoActionPerformed
 
     private void jbDescontoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDescontoTotalActionPerformed
-        double descontoTotal = Double.parseDouble(jtfValorTotalDesconto.getText()); // Obtém o valor total do desconto
-        DescontoTotal dt = new DescontoTotal(this, descontoTotal); // Cria uma instância da classe DescontoTotal, passando o valor do desconto
+        double descontoTotal = Double.parseDouble(jtfValorTotalDesconto.getText());
+        DescontoTotal dt = new DescontoTotal(this, descontoTotal);
         pf.abrirFormulario(dt, jdFundo);
     }//GEN-LAST:event_jbDescontoTotalActionPerformed
 
@@ -594,6 +610,31 @@ public class PdvView extends javax.swing.JFrame {
 
     private void jtfCodigoRapidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodigoRapidoActionPerformed
         // TODO add your handling code here:
+        String entrada = jtfCodigoRapido.getText().trim();
+        String[] partes = entrada.split("\\*");
+        int quantidade;
+        String codigoRapido;
+
+        if (partes.length == 2) {
+            quantidade = Integer.parseInt(partes[0]);
+            codigoRapido = partes[1];
+        } else if (partes.length == 1) {
+            quantidade = 1; // Se apenas o código rápido for informado, quantidade padrão é 1
+            codigoRapido = partes[0];
+        } else {
+            JOptionPane.showMessageDialog(null, "Formato inválido. Use 'quantidade*codigorapido' ou 'codigorapido'.");
+            jtfCodigoRapido.setText("");
+            return;
+        }
+
+        Produto produto = consultarProdutoPorCodigoRapido(codigoRapido);
+        if (produto != null) {
+            adicionarProdutoTabela(produto, quantidade);
+        } else {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+        }
+
+        jtfCodigoRapido.setText("");
     }//GEN-LAST:event_jtfCodigoRapidoActionPerformed
 
     public static void main(String args[]) {
@@ -713,17 +754,12 @@ public class PdvView extends javax.swing.JFrame {
     private void atualizarValorTotalPagar() {
         double valorItens = Double.parseDouble(jtfValorTotalItens.getText());
         double valorDesconto = Double.parseDouble(jtfValorTotalDesconto.getText());
-
         if (valorDesconto > valorItens) {
             JOptionPane.showMessageDialog(null, "Não é possível informar desconto maior que o valor total");
-
-            // Definir o valor do desconto para 0.0
             int row = jtbProdutos.getSelectedRow();
             if (row != -1) {
-                tableModel.setValueAt(0.0, row, 5); // Coluna 5 é a coluna do desconto
+                tableModel.setValueAt(0.0, row, 5);
             }
-
-            // Recalcular o valor do desconto
             valorDesconto = 0.0;
         }
 
@@ -735,8 +771,6 @@ public class PdvView extends javax.swing.JFrame {
         double totalItens = 0.0;
         double totalDesconto = 0.0;
         int rowCount = tableModel.getRowCount();
-
-        // Calcula o valor total da venda e inicializa um array para armazenar os valores totais por produto
         double[] totalPorProduto = new double[rowCount];
 
         for (int i = 0; i < rowCount; i++) {
@@ -746,20 +780,12 @@ public class PdvView extends javax.swing.JFrame {
             totalPorProduto[i] = valorTotalItem;
             totalItens += valorTotalItem;
         }
-
-        // Calcula o desconto total a ser aplicado
         totalDesconto = totalItens * (descontoPorcentagem / 100.0);
-
-        // Calcula o desconto proporcional por produto e atualiza o valor total do desconto
         for (int i = 0; i < rowCount; i++) {
             double descontoProporcional = (totalPorProduto[i] / totalItens) * totalDesconto;
-            tableModel.setValueAt(descontoProporcional, i, 5); // Atualiza o valor do desconto na tabela
+            tableModel.setValueAt(descontoProporcional, i, 5);
         }
-
-        // Atualiza o valor total do desconto
         jtfValorTotalDesconto.setText(String.valueOf(totalDesconto));
-
-        // Atualiza o valor total a pagar
         double novoValorPagar = totalItens - totalDesconto;
         jtfValorTotalPagar.setText(String.valueOf(novoValorPagar));
     }
@@ -767,10 +793,26 @@ public class PdvView extends javax.swing.JFrame {
     private void removerDescontoProdutos() {
         int rowCount = tableModel.getRowCount();
         for (int i = 0; i < rowCount; i++) {
-            tableModel.setValueAt(0.0, i, 5); // Define o valor do desconto como zero para todas as linhas
+            tableModel.setValueAt(0.0, i, 5);
         }
-        jtfValorTotalDesconto.setText("0.0"); // Atualiza o campo de texto do valor total do desconto
-        atualizarValorTotalPagar(); // Atualiza o valor total a pagar após remover os descontos
+        jtfValorTotalDesconto.setText("0.0");
+        atualizarValorTotalPagar();
+    }
+
+    private Produto consultarProdutoPorCodigoRapido(String codigoRapido) {
+        EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+        ProdutoDao produtoDao = new ProdutoDao(em);
+        return produtoDao.selectByCodigoRapidoProduto(codigoRapido);
+    }
+
+    private void adicionarProdutoTabela(Produto produto, int quantidade) {
+        Object[] dados = {produto.getId(), produto.getCodigoRapido(), produto.getDescricao(), quantidade, produto.getValorVenda(), 0.0};
+        tableModel.addRow(dados);
+        calcularValorTotalCompra();
+        calculaValorTotalDesconto();
+        atualizarValorTotalPagar();
+        jbFormaPagamento.setEnabled(true);
+        jbDescontoTotal.setEnabled(true);
     }
 
 }

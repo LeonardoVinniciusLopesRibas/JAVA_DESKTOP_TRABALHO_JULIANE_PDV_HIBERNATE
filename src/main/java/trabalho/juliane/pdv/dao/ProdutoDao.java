@@ -3,13 +3,15 @@ package trabalho.juliane.pdv.dao;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 import trabalho.juliane.pdv.interfaces.ProdutoInterfaces;
 import trabalho.juliane.pdv.model.Produto;
 
-public class ProdutoDao implements ProdutoInterfaces{
-    
+public class ProdutoDao implements ProdutoInterfaces {
+
     private EntityManager em;
 
     public ProdutoDao(EntityManager em) {
@@ -19,14 +21,14 @@ public class ProdutoDao implements ProdutoInterfaces{
     @Override
     public Produto insertProduto(Produto produto) {
 
-        try{
+        try {
             EntityTransaction entTrans = em.getTransaction();
             entTrans.begin();
             em.persist(produto);
             entTrans.commit();
             em.close();
             JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso");
-        }catch (Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return produto;
@@ -58,20 +60,24 @@ public class ProdutoDao implements ProdutoInterfaces{
         }
         return produto;
     }
-    
-    public Produto selectByCodigoRapidoProduto(String codigorapido){
+
+    public Produto selectByCodigoRapidoProduto(String codigorapido) {
         Produto produto = null;
-        try{
-            produto = em.find(Produto.class, codigorapido);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro ao buscar o produto pelo codigo rapido"+e.getMessage());
+        try {
+            Query query = em.createQuery("SELECT p FROM Produto p WHERE UPPER(p.codigoRapido) = :codigoRapido");
+            query.setParameter("codigoRapido", codigorapido.toUpperCase());
+            produto = (Produto) query.getSingleResult();
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado para o código rápido: " + codigorapido);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar o produto pelo código rápido: " + e.getMessage());
         }
         return produto;
     }
 
     @Override
     public Produto updateProduto(Produto produto) {
-        
+
         try {
             em.getTransaction().begin();
             produto = em.merge(produto);
@@ -113,7 +119,5 @@ public class ProdutoDao implements ProdutoInterfaces{
         }
         return produto;
     }
-    
-    
-    
+
 }
