@@ -31,14 +31,6 @@ public class SetIcon {
 
     }
 
-    public void setRemoverProduto(JButton jbRemoverProduto) {
-
-        Image iconImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\leona\\OneDrive\\Documentos\\NetBeansProjects\\TrabalhoJulianePdv\\TrabalhoJulianePdv\\src\\main\\java\\trabalho\\juliane\\pdv\\icon\\removerProduto.png");
-        ImageIcon imageIcon = new ImageIcon(iconImage);
-        jbRemoverProduto.setIcon(imageIcon);
-
-    }
-
     public void setDesconto(JButton jbDescontoTotal) {
 
         Image iconImage = Toolkit.getDefaultToolkit().getImage("C:\\Users\\leona\\OneDrive\\Documentos\\NetBeansProjects\\TrabalhoJulianePdv\\TrabalhoJulianePdv\\src\\main\\java\\trabalho\\juliane\\pdv\\icon\\descontoTotal.png");

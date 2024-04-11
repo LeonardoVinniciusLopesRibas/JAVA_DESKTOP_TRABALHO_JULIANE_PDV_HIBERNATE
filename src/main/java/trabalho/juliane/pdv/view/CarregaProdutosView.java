@@ -57,6 +57,7 @@ public class CarregaProdutosView extends javax.swing.JInternalFrame {
             .addGap(0, 388, Short.MAX_VALUE)
         );
 
+        jbFechar.setMnemonic('F');
         jbFechar.setText("FECHAR");
         jbFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +71,7 @@ public class CarregaProdutosView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpnProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(397, Short.MAX_VALUE)
+                .addContainerGap(314, Short.MAX_VALUE)
                 .addComponent(jbFechar)
                 .addContainerGap())
         );

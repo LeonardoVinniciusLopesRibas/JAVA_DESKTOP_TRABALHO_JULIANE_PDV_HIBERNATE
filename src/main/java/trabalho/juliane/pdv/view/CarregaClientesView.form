@@ -41,6 +41,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jbFechar">
       <Properties>
+        <Property name="mnemonic" type="int" value="70"/>
         <Property name="text" type="java.lang.String" value="FECHAR"/>
       </Properties>
       <Events>

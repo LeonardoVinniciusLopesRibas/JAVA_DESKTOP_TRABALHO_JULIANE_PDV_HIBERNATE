@@ -29,6 +29,10 @@ public class PdvView extends javax.swing.JFrame {
     public PdvView() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        jbFinalizar.setEnabled(false);
+        jbFormaPagamento.setEnabled(false);
+        jbFinalizar.setEnabled(false);
+        jbDescontoTotal.setEnabled(false);
         tableModel = new CustomTableModel();
         tableModel.addColumn("Id");
         tableModel.addColumn("Código Rápido");
@@ -39,7 +43,6 @@ public class PdvView extends javax.swing.JFrame {
         jtbProdutos.setModel(tableModel);
         si.setIconFinalizar(jbFinalizar);
         si.setFormaPagamento(jbFormaPagamento);
-        si.setRemoverProduto(jbRemoverProduto);
         si.setDesconto(jbDescontoTotal);
         si.setAdicionarProduto(jbAddProduto);
         si.setAdicionarCliente(jbAddCliente);
@@ -105,6 +108,11 @@ public class PdvView extends javax.swing.JFrame {
                     calcularValorTotalCompra();
                     calculaValorTotalDesconto();
                     atualizarValorTotalPagar();
+                    if (model.getRowCount() == 0) {
+                        // Se não houver, desabilitar os botões
+                        jbFormaPagamento.setEnabled(false);
+                        jbDescontoTotal.setEnabled(false);
+                    }
                 }
             }
         });
@@ -141,7 +149,6 @@ public class PdvView extends javax.swing.JFrame {
         jbFormaPagamento = new javax.swing.JButton();
         jbFinalizar = new javax.swing.JButton();
         jbAddProduto = new javax.swing.JButton();
-        jbRemoverProduto = new javax.swing.JButton();
         jbNovaVenda = new javax.swing.JButton();
         jbAddCliente = new javax.swing.JButton();
         jbSair = new javax.swing.JButton();
@@ -330,13 +337,15 @@ public class PdvView extends javax.swing.JFrame {
 
         btRemoverFormaPagamento.setText("Remover Forma de Pagamento");
 
-        jbFormaPagamento.setText("Forma de Pagamento");
+        jbFormaPagamento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jbFormaPagamento.setText("Pagamento");
         jbFormaPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbFormaPagamentoActionPerformed(evt);
             }
         });
 
+        jbFinalizar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbFinalizar.setText("Finalizar");
         jbFinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,21 +353,16 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbAddProduto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbAddProduto.setMnemonic('P');
-        jbAddProduto.setText("Adicionar Produto");
+        jbAddProduto.setText("Add Produto");
         jbAddProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAddProdutoActionPerformed(evt);
             }
         });
 
-        jbRemoverProduto.setText("Remover Produto");
-        jbRemoverProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbRemoverProdutoActionPerformed(evt);
-            }
-        });
-
+        jbNovaVenda.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbNovaVenda.setMnemonic('N');
         jbNovaVenda.setText("Nova Venda");
         jbNovaVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -367,14 +371,16 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbAddCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbAddCliente.setMnemonic('C');
-        jbAddCliente.setText("Adicionar Cliente");
+        jbAddCliente.setText("Add Cliente");
         jbAddCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAddClienteActionPerformed(evt);
             }
         });
 
+        jbSair.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbSair.setMnemonic('S');
         jbSair.setText("Sair");
         jbSair.addActionListener(new java.awt.event.ActionListener() {
@@ -383,8 +389,9 @@ public class PdvView extends javax.swing.JFrame {
             }
         });
 
+        jbDescontoTotal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jbDescontoTotal.setMnemonic('D');
-        jbDescontoTotal.setText("Desconto Total");
+        jbDescontoTotal.setText("Desconto");
         jbDescontoTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbDescontoTotalActionPerformed(evt);
@@ -406,7 +413,6 @@ public class PdvView extends javax.swing.JFrame {
         jdFundo.setLayer(jbFormaPagamento, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jbFinalizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jbAddProduto, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jdFundo.setLayer(jbRemoverProduto, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jbNovaVenda, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jbAddCliente, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jdFundo.setLayer(jbSair, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -423,6 +429,10 @@ public class PdvView extends javax.swing.JFrame {
                 .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jdFundoLayout.createSequentialGroup()
                         .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btRemoverDesconto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btRemoverFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jdFundoLayout.createSequentialGroup()
                                 .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
@@ -439,31 +449,25 @@ public class PdvView extends javax.swing.JFrame {
                                     .addGroup(jdFundoLayout.createSequentialGroup()
                                         .addComponent(jtfCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(btRemover))))
-                            .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btRemoverDesconto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btRemoverFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btRemover)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
                     .addGroup(jdFundoLayout.createSequentialGroup()
-                        .addComponent(jbFinalizar)
+                        .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbFormaPagamento)
+                        .addComponent(jbFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbRemoverProduto)
+                        .addComponent(jbDescontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbDescontoTotal)
+                        .addComponent(jbAddProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbAddProduto)
+                        .addComponent(jbAddCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbAddCliente)
+                        .addComponent(jbNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbNovaVenda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbSair)
-                        .addContainerGap(390, Short.MAX_VALUE))))
+                        .addComponent(jbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jdFundoLayout.setVerticalGroup(
             jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -500,13 +504,12 @@ public class PdvView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(jdFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbAddProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbRemoverProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbAddCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbDescontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbDescontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -530,10 +533,9 @@ public class PdvView extends javax.swing.JFrame {
     private void jbFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFormaPagamentoActionPerformed
     }//GEN-LAST:event_jbFormaPagamentoActionPerformed
 
-    private void jbRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRemoverProdutoActionPerformed
-    }//GEN-LAST:event_jbRemoverProdutoActionPerformed
-
     private void jbDescontoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDescontoTotalActionPerformed
+        DescontoTotal dt = new DescontoTotal();
+        pf.abrirFormulario(dt, jdFundo);
     }//GEN-LAST:event_jbDescontoTotalActionPerformed
 
     private void jbAddProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddProdutoActionPerformed
@@ -548,7 +550,7 @@ public class PdvView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbAddClienteActionPerformed
 
     private void jbNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNovaVendaActionPerformed
-        int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente limpar os campos?", "Confirmação", JOptionPane.YES_NO_OPTION);
+        int resposta = JOptionPane.showConfirmDialog(null, "Deseja iniciar nova venda?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
         if (resposta == JOptionPane.YES_OPTION) {
             limpaCampos();
@@ -627,7 +629,6 @@ public class PdvView extends javax.swing.JFrame {
     public javax.swing.JButton jbFinalizar;
     public javax.swing.JButton jbFormaPagamento;
     public javax.swing.JButton jbNovaVenda;
-    public javax.swing.JButton jbRemoverProduto;
     public javax.swing.JButton jbSair;
     private javax.swing.JDesktopPane jdFundo;
     public javax.swing.JTable jtbProdutos;
@@ -658,6 +659,7 @@ public class PdvView extends javax.swing.JFrame {
         jtfId.setText(String.valueOf(id));
         jtfNomeCliente.setText(nome);
         jtfCpfCnpj.setText(cpfCnpj);
+        jbAddProduto.setEnabled(true);
 
     }
 
@@ -667,6 +669,8 @@ public class PdvView extends javax.swing.JFrame {
         calcularValorTotalCompra();
         calculaValorTotalDesconto();
         atualizarValorTotalPagar();
+        jbFormaPagamento.setEnabled(true);
+        jbDescontoTotal.setEnabled(true);
     }
 
     private void calcularValorTotalCompra() {
@@ -690,24 +694,24 @@ public class PdvView extends javax.swing.JFrame {
     }
 
     private void atualizarValorTotalPagar() {
-    double valorItens = Double.parseDouble(jtfValorTotalItens.getText());
-    double valorDesconto = Double.parseDouble(jtfValorTotalDesconto.getText());
-    
-    if (valorDesconto > valorItens) {
-        JOptionPane.showMessageDialog(null, "Não é possível informar desconto maior que o valor total");
-        
-        // Definir o valor do desconto para 0.0
-        int row = jtbProdutos.getSelectedRow();
-        if (row != -1) {
-            tableModel.setValueAt(0.0, row, 5); // Coluna 5 é a coluna do desconto
+        double valorItens = Double.parseDouble(jtfValorTotalItens.getText());
+        double valorDesconto = Double.parseDouble(jtfValorTotalDesconto.getText());
+
+        if (valorDesconto > valorItens) {
+            JOptionPane.showMessageDialog(null, "Não é possível informar desconto maior que o valor total");
+
+            // Definir o valor do desconto para 0.0
+            int row = jtbProdutos.getSelectedRow();
+            if (row != -1) {
+                tableModel.setValueAt(0.0, row, 5); // Coluna 5 é a coluna do desconto
+            }
+
+            // Recalcular o valor do desconto
+            valorDesconto = 0.0;
         }
-        
-        // Recalcular o valor do desconto
-        valorDesconto = 0.0;
+
+        double valorPagar = valorItens - valorDesconto;
+        jtfValorTotalPagar.setText(String.valueOf(valorPagar));
     }
-    
-    double valorPagar = valorItens - valorDesconto;
-    jtfValorTotalPagar.setText(String.valueOf(valorPagar));
-}
 
 }

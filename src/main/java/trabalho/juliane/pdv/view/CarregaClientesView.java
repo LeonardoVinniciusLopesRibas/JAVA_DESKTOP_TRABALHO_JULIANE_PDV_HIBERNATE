@@ -43,6 +43,7 @@ public class CarregaClientesView extends javax.swing.JInternalFrame {
         jbFechar = new javax.swing.JButton();
         jpnClientes = new javax.swing.JPanel();
 
+        jbFechar.setMnemonic('F');
         jbFechar.setText("FECHAR");
         jbFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

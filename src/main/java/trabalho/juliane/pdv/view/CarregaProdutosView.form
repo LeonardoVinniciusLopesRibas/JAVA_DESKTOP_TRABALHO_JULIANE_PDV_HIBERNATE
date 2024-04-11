@@ -21,7 +21,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jpnProdutos" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="397" max="32767" attributes="0"/>
+              <EmptySpace pref="314" max="32767" attributes="0"/>
               <Component id="jbFechar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -56,6 +56,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="jbFechar">
       <Properties>
+        <Property name="mnemonic" type="int" value="70"/>
         <Property name="text" type="java.lang.String" value="FECHAR"/>
       </Properties>
       <Events>
