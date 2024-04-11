@@ -534,7 +534,8 @@ public class PdvView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbFormaPagamentoActionPerformed
 
     private void jbDescontoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDescontoTotalActionPerformed
-        DescontoTotal dt = new DescontoTotal();
+        double descontoTotal = Double.parseDouble(jtfValorTotalDesconto.getText()); // Obtém o valor total do desconto
+        DescontoTotal dt = new DescontoTotal(this, descontoTotal); // Cria uma instância da classe DescontoTotal, passando o valor do desconto
         pf.abrirFormulario(dt, jdFundo);
     }//GEN-LAST:event_jbDescontoTotalActionPerformed
 
@@ -554,7 +555,10 @@ public class PdvView extends javax.swing.JFrame {
 
         if (resposta == JOptionPane.YES_OPTION) {
             limpaCampos();
+            jbDescontoTotal.setEnabled(false);
+            jbFormaPagamento.setEnabled(false);
         }
+
     }//GEN-LAST:event_jbNovaVendaActionPerformed
 
     private void jbSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSairActionPerformed
@@ -712,6 +716,39 @@ public class PdvView extends javax.swing.JFrame {
 
         double valorPagar = valorItens - valorDesconto;
         jtfValorTotalPagar.setText(String.valueOf(valorPagar));
+    }
+
+    void calcularRateioDesconto(double descontoPorcentagem) {
+        double totalItens = 0.0;
+        double totalDesconto = 0.0;
+        int rowCount = tableModel.getRowCount();
+
+        // Calcula o valor total da venda e inicializa um array para armazenar os valores totais por produto
+        double[] totalPorProduto = new double[rowCount];
+
+        for (int i = 0; i < rowCount; i++) {
+            int quantidade = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
+            double valorUnitario = Double.parseDouble(tableModel.getValueAt(i, 4).toString());
+            double valorTotalItem = quantidade * valorUnitario;
+            totalPorProduto[i] = valorTotalItem;
+            totalItens += valorTotalItem;
+        }
+
+        // Calcula o desconto total a ser aplicado
+        totalDesconto = totalItens * (descontoPorcentagem / 100.0);
+
+        // Calcula o desconto proporcional por produto e atualiza o valor total do desconto
+        for (int i = 0; i < rowCount; i++) {
+            double descontoProporcional = (totalPorProduto[i] / totalItens) * totalDesconto;
+            tableModel.setValueAt(descontoProporcional, i, 5); // Atualiza o valor do desconto na tabela
+        }
+
+        // Atualiza o valor total do desconto
+        jtfValorTotalDesconto.setText(String.valueOf(totalDesconto));
+
+        // Atualiza o valor total a pagar
+        double novoValorPagar = totalItens - totalDesconto;
+        jtfValorTotalPagar.setText(String.valueOf(novoValorPagar));
     }
 
 }

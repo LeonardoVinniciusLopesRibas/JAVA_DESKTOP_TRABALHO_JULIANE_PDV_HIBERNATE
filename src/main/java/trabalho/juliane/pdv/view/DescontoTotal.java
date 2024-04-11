@@ -2,8 +2,13 @@ package trabalho.juliane.pdv.view;
 
 public class DescontoTotal extends javax.swing.JInternalFrame {
 
-    public DescontoTotal() {
+    private double descontoTotal;
+    private PdvView pdvView;
+
+    public DescontoTotal(PdvView pdvView, double descontoTotal) {
         initComponents();
+        this.descontoTotal = descontoTotal;
+        this.pdvView = pdvView;
     }
 
     @SuppressWarnings("unchecked")
@@ -29,7 +34,7 @@ public class DescontoTotal extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Aplicar Desconto");
+        jLabel1.setText("Aplicar Desconto EM PORCENTAGEM");
 
         jButton1.setText("Fechar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +76,20 @@ public class DescontoTotal extends javax.swing.JInternalFrame {
 
     private void jbAddDescontoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddDescontoTotalActionPerformed
         // TODO add your handling code here:
-      
+        String descontoStr = jtfDescontoTotal.getText();
+
+        try {
+            // Converte o valor do desconto para double
+            double desconto = Double.parseDouble(descontoStr);
+
+            pdvView.calcularRateioDesconto(desconto);
+            dispose();
+        } catch (NumberFormatException e) {
+            // Trata o caso em que o valor informado não é um número válido
+            // Aqui você pode exibir uma mensagem de erro ao usuário
+            System.err.println("Valor de desconto inválido: " + descontoStr);
+        }
+
     }//GEN-LAST:event_jbAddDescontoTotalActionPerformed
 
     private void jtfDescontoTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDescontoTotalActionPerformed
