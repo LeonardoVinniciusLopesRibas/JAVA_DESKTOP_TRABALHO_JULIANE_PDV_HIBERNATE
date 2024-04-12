@@ -1,5 +1,7 @@
 package trabalho.juliane.pdv.view;
 
+import javax.swing.JOptionPane;
+
 public class DescontoTotal extends javax.swing.JInternalFrame {
 
     private double descontoTotal;
@@ -81,14 +83,17 @@ public class DescontoTotal extends javax.swing.JInternalFrame {
         String descontoStr = jtfDescontoTotal.getText();
 
         try {
-            // Converte o valor do desconto para double
             double desconto = Double.parseDouble(descontoStr);
+            if (desconto > 100) {
+                JOptionPane.showMessageDialog(null, "Permitido apenas 0 a 100%");
+            }else if(desconto < 0){
+                JOptionPane.showMessageDialog(null, "Permitido apenas 0 a 100%");
+            }else{
+                pdvView.calcularRateioDesconto(desconto);
+            }
 
-            pdvView.calcularRateioDesconto(desconto);
             dispose();
         } catch (NumberFormatException e) {
-            // Trata o caso em que o valor informado não é um número válido
-            // Aqui você pode exibir uma mensagem de erro ao usuário
             System.err.println("Valor de desconto inválido: " + descontoStr);
         }
 
