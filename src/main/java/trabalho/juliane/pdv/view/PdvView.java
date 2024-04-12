@@ -13,8 +13,12 @@ import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import trabalho.juliane.pdv.dao.ItemVendaDao;
 import trabalho.juliane.pdv.dao.ProdutoDao;
+import trabalho.juliane.pdv.dao.VendaDao;
+import trabalho.juliane.pdv.model.ItemVenda;
 import trabalho.juliane.pdv.model.Produto;
+import trabalho.juliane.pdv.model.Venda;
 import trabalho.juliane.pdv.util.CustomRowHeight;
 import trabalho.juliane.pdv.util.CustomTableModel;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
@@ -37,6 +41,7 @@ public class PdvView extends javax.swing.JFrame {
         jbFinalizar.setEnabled(false);
         jbFinalizar.setEnabled(false);
         jbDescontoTotal.setEnabled(false);
+        btRemoverDesconto.setEnabled(false);
         tableModel = new CustomTableModel();
         tableModel.addColumn("Id");
         tableModel.addColumn("Código Rápido");
@@ -51,6 +56,7 @@ public class PdvView extends javax.swing.JFrame {
         si.setAdicionarCliente(jbAddCliente);
         si.setNovaVenda(jbNovaVenda);
         si.setSair(jbSair);
+        si.setRemoverDesconto(btRemoverDesconto);
         jtfValorTotalDesconto.setEditable(false);
         jtfValorTotalItens.setEditable(false);
         jtfValorTotalPagar.setEditable(false);
@@ -489,6 +495,47 @@ public class PdvView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarActionPerformed
+        
+        
+        Venda venda = new Venda();
+        int qtdProduto = tableModel.getRowCount();
+        venda.setAtivo(true);
+        venda.setQtdItens(qtdProduto);
+        String valorTotal = jtfValorTotalPagar.getText();
+        double valorTotalDouble = Double.parseDouble(valorTotal);
+        venda.setValorTotal(valorTotalDouble);
+        String valorTotalDesconto = jtfValorTotalDesconto.getText();
+        double valorTotalDescontoDouble = Double.parseDouble(valorTotalDesconto);
+        venda.setValorTotalDesconto(valorTotalDescontoDouble);
+
+        EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+        VendaDao vd = new VendaDao(em);
+        // Insira a venda no banco de dados e obtenha a instância gerenciada
+        venda = vd.insertVenda(venda, em);
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            ItemVenda itemVenda = new ItemVenda();
+            itemVenda.setAtivo(true);
+            itemVenda.setQuantidade(Integer.parseInt(tableModel.getValueAt(i, 3).toString()));
+
+            String idProduto = tableModel.getValueAt(i, 0).toString();
+            int idProdutoInt = Integer.parseInt(idProduto);
+            ProdutoDao produtoDao = new ProdutoDao(em);
+            Produto produto = produtoDao.selectByIdProduto(idProdutoInt);
+            if (produto != null) {
+                itemVenda.setProduto(produto);
+            } else {
+                System.out.println("Produto não encontrado para o ID: " + idProdutoInt);
+            }
+
+            // Associe a instância gerenciada de Venda ao itemVenda
+            itemVenda.setVenda(venda);
+
+            ItemVendaDao ivd = new ItemVendaDao(em);
+            // Insira o item de venda no banco de dados
+            ivd.insertItemVenda(itemVenda);
+        }
+
 
     }//GEN-LAST:event_jbFinalizarActionPerformed
 
@@ -658,6 +705,8 @@ public class PdvView extends javax.swing.JFrame {
         calculaValorTotalDesconto();
         atualizarValorTotalPagar();
         jbDescontoTotal.setEnabled(true);
+        btRemoverDesconto.setEnabled(true);
+        jbFinalizar.setEnabled(true);
     }
 
     private void calcularValorTotalCompra() {

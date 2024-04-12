@@ -61,6 +61,7 @@ public class ProdutoDao implements ProdutoInterfaces {
         return produto;
     }
 
+
     public Produto selectByCodigoRapidoProduto(String codigorapido) {
         Produto produto = null;
         try {
