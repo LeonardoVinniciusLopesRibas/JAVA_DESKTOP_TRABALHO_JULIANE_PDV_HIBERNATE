@@ -13,9 +13,11 @@ import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import trabalho.juliane.pdv.dao.ClienteDao;
 import trabalho.juliane.pdv.dao.ItemVendaDao;
 import trabalho.juliane.pdv.dao.ProdutoDao;
 import trabalho.juliane.pdv.dao.VendaDao;
+import trabalho.juliane.pdv.model.Cliente;
 import trabalho.juliane.pdv.model.ItemVenda;
 import trabalho.juliane.pdv.model.Produto;
 import trabalho.juliane.pdv.model.Venda;
@@ -507,6 +509,24 @@ public class PdvView extends javax.swing.JFrame {
         String valorTotalDesconto = jtfValorTotalDesconto.getText();
         double valorTotalDescontoDouble = Double.parseDouble(valorTotalDesconto);
         venda.setValorTotalDesconto(valorTotalDescontoDouble);
+        
+        String clienteId = jtfId.getText();
+    if (!clienteId.isEmpty()) { // Verifique se o ID do cliente foi fornecido
+        int clienteIdInt = Integer.parseInt(clienteId);
+        
+        // Consulte o banco de dados para recuperar o cliente correspondente
+        EntityManager emCliente = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+        ClienteDao clienteDao = new ClienteDao(emCliente);
+        Cliente cliente = clienteDao.selectByIdCliente(clienteIdInt);
+        
+        if (cliente != null) {
+            // Defina o cliente na venda
+            venda.setCliente(cliente);
+        } else {
+            System.out.println("Cliente não encontrado para o ID: " + clienteIdInt);
+            // Trate o caso em que o cliente não foi encontrado
+        }
+    }
 
         EntityManager emVenda = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
         VendaDao vd = new VendaDao(emVenda);
