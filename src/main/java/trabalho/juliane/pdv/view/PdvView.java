@@ -515,8 +515,8 @@ public class PdvView extends javax.swing.JFrame {
             ItemVenda itemVenda = new ItemVenda();
             itemVenda.setAtivo(true);
             itemVenda.setQuantidade(Integer.parseInt(tableModel.getValueAt(i, 3).toString()));
-            JOptionPane.showMessageDialog(null, "Quantidade de linhas" + tableModel.getRowCount());
-            JOptionPane.showMessageDialog(null, "Quantidade" + itemVenda.getQuantidade());
+            //JOptionPane.showMessageDialog(null, "Quantidade de linhas" + tableModel.getRowCount());
+            //JOptionPane.showMessageDialog(null, "Quantidade" + itemVenda.getQuantidade());
             String idProduto = tableModel.getValueAt(i, 0).toString();
 
             int idProdutoInt = Integer.parseInt(idProduto);
@@ -527,7 +527,7 @@ public class PdvView extends javax.swing.JFrame {
             } else {
                 System.out.println("Produto não encontrado para o ID: " + idProdutoInt);
             }
-            JOptionPane.showMessageDialog(null, "id do produto" + itemVenda.getProduto());
+            //JOptionPane.showMessageDialog(null, "id do produto" + itemVenda.getProduto());
 
             // Associe a instância gerenciada de Venda ao itemVenda
             itemVenda.setVenda(venda);
@@ -536,7 +536,9 @@ public class PdvView extends javax.swing.JFrame {
             ItemVendaDao ivd = new ItemVendaDao(emItemVenda);
             ivd.insertItemVenda(itemVenda, emItemVenda);
         }
-
+        
+        limpaCampos();
+        jbDescontoTotal.setEnabled(false);
 
     }//GEN-LAST:event_jbFinalizarActionPerformed
 
