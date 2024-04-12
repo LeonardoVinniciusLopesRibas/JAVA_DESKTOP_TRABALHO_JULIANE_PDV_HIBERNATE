@@ -114,6 +114,7 @@ public class PdvView extends javax.swing.JFrame {
                     atualizarValorTotalPagar();
                     if (model.getRowCount() == 0) {
                         jbDescontoTotal.setEnabled(false);
+                        jbFinalizar.setEnabled(false);
                     }
                 }
             }
