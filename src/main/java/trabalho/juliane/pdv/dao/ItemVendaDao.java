@@ -17,21 +17,18 @@ public class ItemVendaDao implements ItemVendaInterfaces {
     }
 
     @Override
-    public ItemVenda insertItemVenda(ItemVenda itemVenda) {
-
-        try {
-            EntityTransaction entTrans = em.getTransaction();
-            entTrans.begin();
-            em.persist(itemVenda);
-            entTrans.commit();
-            em.close();
-            System.out.println("Venda realizada com sucesso");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        return itemVenda;
-
+    public ItemVenda insertItemVenda(ItemVenda itemVenda, EntityManager em) {
+    try {
+        EntityTransaction entTrans = em.getTransaction();
+        entTrans.begin();
+        em.persist(itemVenda);
+        entTrans.commit();
+        System.out.println("Item de venda inserido com sucesso");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
     }
+    return itemVenda;
+}
 
     @Override
     public ArrayList<ItemVenda> selectAllItemVenda() {

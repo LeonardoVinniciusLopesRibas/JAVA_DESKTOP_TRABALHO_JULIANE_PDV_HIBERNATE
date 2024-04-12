@@ -495,8 +495,7 @@ public class PdvView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarActionPerformed
-        
-        
+
         Venda venda = new Venda();
         int qtdProduto = tableModel.getRowCount();
         venda.setAtivo(true);
@@ -508,32 +507,34 @@ public class PdvView extends javax.swing.JFrame {
         double valorTotalDescontoDouble = Double.parseDouble(valorTotalDesconto);
         venda.setValorTotalDesconto(valorTotalDescontoDouble);
 
-        EntityManager em = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
-        VendaDao vd = new VendaDao(em);
-        // Insira a venda no banco de dados e obtenha a instância gerenciada
-        venda = vd.insertVenda(venda, em);
+        EntityManager emVenda = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+        VendaDao vd = new VendaDao(emVenda);
+        venda = vd.insertVenda(venda, emVenda);
 
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             ItemVenda itemVenda = new ItemVenda();
             itemVenda.setAtivo(true);
             itemVenda.setQuantidade(Integer.parseInt(tableModel.getValueAt(i, 3).toString()));
-
+            JOptionPane.showMessageDialog(null, "Quantidade de linhas" + tableModel.getRowCount());
+            JOptionPane.showMessageDialog(null, "Quantidade" + itemVenda.getQuantidade());
             String idProduto = tableModel.getValueAt(i, 0).toString();
+
             int idProdutoInt = Integer.parseInt(idProduto);
-            ProdutoDao produtoDao = new ProdutoDao(em);
+            ProdutoDao produtoDao = new ProdutoDao(emVenda);
             Produto produto = produtoDao.selectByIdProduto(idProdutoInt);
             if (produto != null) {
                 itemVenda.setProduto(produto);
             } else {
                 System.out.println("Produto não encontrado para o ID: " + idProdutoInt);
             }
+            JOptionPane.showMessageDialog(null, "id do produto" + itemVenda.getProduto());
 
             // Associe a instância gerenciada de Venda ao itemVenda
             itemVenda.setVenda(venda);
 
-            ItemVendaDao ivd = new ItemVendaDao(em);
-            // Insira o item de venda no banco de dados
-            ivd.insertItemVenda(itemVenda);
+            EntityManager emItemVenda = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+            ItemVendaDao ivd = new ItemVendaDao(emItemVenda);
+            ivd.insertItemVenda(itemVenda, emItemVenda);
         }
 
 
