@@ -1,5 +1,6 @@
 package trabalho.juliane.pdv.model;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,29 +8,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "venda")
 public class Venda {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @Column(name = "valorTotal")
     private double valorTotal;
-    
+
     @OneToOne
     private Cliente cliente;
-    
+
     @Column(name = "valorTotalDesconto")
     private double valorTotalDesconto;
-    
+
     @Column(name = "qtdItens")
     private int qtdItens;
-    
+
     @Column(name = "ativo")
     private boolean ativo;
+
+    @Transient
+    private List<ItemVenda> itensVenda;
 
     public Venda() {
     }
@@ -87,10 +92,16 @@ public class Venda {
         return ativo;
     }
 
+    public List<ItemVenda> getItensVenda() {
+        return itensVenda;
+    }
+
+    public void setItensVenda(List<ItemVenda> itensVenda) {
+        this.itensVenda = itensVenda;
+    }
+
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
 
-    
-    
 }

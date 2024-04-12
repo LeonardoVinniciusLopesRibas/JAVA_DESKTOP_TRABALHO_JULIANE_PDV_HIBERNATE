@@ -3,6 +3,8 @@ package trabalho.juliane.pdv.view;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -24,6 +26,7 @@ import trabalho.juliane.pdv.model.Venda;
 import trabalho.juliane.pdv.util.CustomRowHeight;
 import trabalho.juliane.pdv.util.CustomTableModel;
 import trabalho.juliane.pdv.util.EntityManagerUtil;
+import trabalho.juliane.pdv.util.GeradorPDF;
 import trabalho.juliane.pdv.util.PosicaoFormulario;
 import trabalho.juliane.pdv.util.SetIcon;
 import trabalho.juliane.pdv.util.TabelaProdutos;
@@ -509,28 +512,30 @@ public class PdvView extends javax.swing.JFrame {
         String valorTotalDesconto = jtfValorTotalDesconto.getText();
         double valorTotalDescontoDouble = Double.parseDouble(valorTotalDesconto);
         venda.setValorTotalDesconto(valorTotalDescontoDouble);
-        
+
         String clienteId = jtfId.getText();
-    if (!clienteId.isEmpty()) { // Verifique se o ID do cliente foi fornecido
-        int clienteIdInt = Integer.parseInt(clienteId);
-        
-        // Consulte o banco de dados para recuperar o cliente correspondente
-        EntityManager emCliente = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
-        ClienteDao clienteDao = new ClienteDao(emCliente);
-        Cliente cliente = clienteDao.selectByIdCliente(clienteIdInt);
-        
-        if (cliente != null) {
-            // Defina o cliente na venda
-            venda.setCliente(cliente);
-        } else {
-            System.out.println("Cliente não encontrado para o ID: " + clienteIdInt);
-            // Trate o caso em que o cliente não foi encontrado
+        if (!clienteId.isEmpty()) { // Verifique se o ID do cliente foi fornecido
+            int clienteIdInt = Integer.parseInt(clienteId);
+
+            // Consulte o banco de dados para recuperar o cliente correspondente
+            EntityManager emCliente = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
+            ClienteDao clienteDao = new ClienteDao(emCliente);
+            Cliente cliente = clienteDao.selectByIdCliente(clienteIdInt);
+
+            if (cliente != null) {
+                // Defina o cliente na venda
+                venda.setCliente(cliente);
+            } else {
+                System.out.println("Cliente não encontrado para o ID: " + clienteIdInt);
+                // Trate o caso em que o cliente não foi encontrado
+            }
         }
-    }
 
         EntityManager emVenda = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
         VendaDao vd = new VendaDao(emVenda);
         venda = vd.insertVenda(venda, emVenda);
+        List<ItemVenda> itensVenda = new ArrayList<>();
+
 
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             ItemVenda itemVenda = new ItemVenda();
@@ -556,10 +561,13 @@ public class PdvView extends javax.swing.JFrame {
             EntityManager emItemVenda = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
             ItemVendaDao ivd = new ItemVendaDao(emItemVenda);
             ivd.insertItemVenda(itemVenda, emItemVenda);
+            itensVenda.add(itemVenda);
         }
-        
+
         limpaCampos();
         jbDescontoTotal.setEnabled(false);
+        GeradorPDF geradorPDF = new GeradorPDF();
+        geradorPDF.gerarPDF(venda, itensVenda);
 
     }//GEN-LAST:event_jbFinalizarActionPerformed
 

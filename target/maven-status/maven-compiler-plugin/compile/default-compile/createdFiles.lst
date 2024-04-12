@@ -29,6 +29,7 @@ trabalho\juliane\pdv\view\PdvView$9.class
 trabalho\juliane\pdv\util\Tabela.class
 trabalho\juliane\pdv\model\ItemVenda.class
 trabalho\juliane\pdv\view\PdvView$12.class
+trabalho\juliane\pdv\util\GeradorPDF.class
 trabalho\juliane\pdv\dao\ClienteDao.class
 trabalho\juliane\pdv\util\TabelaProdutos.class
 trabalho\juliane\pdv\view\PdvView$5.class
