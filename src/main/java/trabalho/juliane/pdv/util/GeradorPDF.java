@@ -25,10 +25,20 @@ public class GeradorPDF {
 
             // Adiciona o cabeçalho "EMPRESA DA VIDA"
             document.add(new Paragraph("EMPRESA DA VIDA"));
+            
+            document.add(new Paragraph(" "));
 
             // Adiciona o nome do cliente
-            document.add(new Paragraph("Cliente: " + venda.getCliente().getNome()));
+            //VALIDAR SE TEM CLIENTE AINDA
+            if (venda.getCliente() != null) {
+                document.add(new Paragraph("Cliente: " + venda.getCliente().getNome()));
+            } else {
+                document.add(new Paragraph("Não possui"));
+            }
 
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
             // Adiciona a tabela de produtos
             PdfPTable table = new PdfPTable(5); // 3 colunas para ID, Nome e Quantidade
             table.addCell("ID Produto");
@@ -39,7 +49,6 @@ public class GeradorPDF {
             table.addCell("Valor Total");
 
             //itensVenda = venda.getItensVenda();
-
             if (itensVenda != null) {
                 for (ItemVenda item : itensVenda) {
                     table.addCell(String.valueOf(item.getProduto().getId())); // ID do Produto
@@ -56,9 +65,14 @@ public class GeradorPDF {
 
             document.add(table); // Adiciona a tabela ao documento
 
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
             // Adiciona os totais
             document.add(new Paragraph("Valor Total: " + venda.getValorTotal()));
+            document.add(new Paragraph(" "));
             document.add(new Paragraph("Valor Total com Desconto: " + venda.getValorTotalDesconto()));
+            document.add(new Paragraph(" "));
             document.add(new Paragraph("Valor Total a Pagar: " + (venda.getValorTotal() - venda.getValorTotalDesconto())));
 
             document.close(); // Close the document after writing
