@@ -3,9 +3,9 @@ package trabalho.juliane.pdv.util;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
-
-// Import classes from iText library
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -17,71 +17,71 @@ public class GeradorPDF {
 
     public void gerarPDF(Venda venda, List<ItemVenda> itensVenda) {
         try {
-            // Create Document instance
             Document document = new Document();
-            // Set up PDF writer to write to a file named "venda.pdf"
             PdfWriter.getInstance(document, new FileOutputStream("venda.pdf"));
             document.open();
+            Font fontNegrito = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+            Paragraph empresa = new Paragraph("MERCADINHO UNIPAR", fontNegrito);
+            empresa.setAlignment(Element.ALIGN_CENTER);
+            document.add(empresa);
 
-            // Adiciona o cabeçalho "EMPRESA DA VIDA"
-            document.add(new Paragraph("EMPRESA DA VIDA"));
-            
             document.add(new Paragraph(" "));
-
-            // Adiciona o nome do cliente
-            //VALIDAR SE TEM CLIENTE AINDA
             if (venda.getCliente() != null) {
-                document.add(new Paragraph("Cliente: " + venda.getCliente().getNome()));
+                Paragraph cliente = new Paragraph("Cliente: " + venda.getCliente().getNome());
+                cliente.setAlignment(Element.ALIGN_CENTER);
+                document.add(cliente);
             } else {
-                document.add(new Paragraph("Não possui"));
+                Paragraph clienteNot = new Paragraph("Cliente: Não possui");
+                clienteNot.setAlignment(Element.ALIGN_CENTER);
+                document.add(clienteNot);
             }
 
             document.add(new Paragraph(" "));
-            document.add(new Paragraph(" "));
-            document.add(new Paragraph(" "));
-            // Adiciona a tabela de produtos
-            PdfPTable table = new PdfPTable(5); // 3 colunas para ID, Nome e Quantidade
+
+            PdfPTable table = new PdfPTable(5);
             table.addCell("ID Produto");
             table.addCell("Nome Produto");
             table.addCell("Quantidade");
-            //Quantidade * valor unitario
             table.addCell("Valor Unit");
             table.addCell("Valor Total");
 
-            //itensVenda = venda.getItensVenda();
             if (itensVenda != null) {
                 for (ItemVenda item : itensVenda) {
-                    table.addCell(String.valueOf(item.getProduto().getId())); // ID do Produto
-                    table.addCell(item.getProduto().getDescricao()); // Nome do Produto
-                    table.addCell(String.valueOf(item.getQuantidade())); // Quantidade
-                    table.addCell(String.valueOf(item.getProduto().getValorVenda())); // Valor Unitário do Produto
-                    table.addCell(String.valueOf(item.getQuantidade() * item.getProduto().getValorVenda())); // Valor Total do Item
+                    table.addCell(String.valueOf(item.getProduto().getId()));
+                    table.addCell(item.getProduto().getDescricao());
+                    table.addCell(String.valueOf(item.getQuantidade()));
+                    table.addCell(String.valueOf(item.getProduto().getValorVenda()));
+                    table.addCell(String.valueOf(item.getQuantidade() * item.getProduto().getValorVenda()));
                 }
 
-            } else {
-                // Handle the case where itensVenda is null
-                // For example, you could log an error message or throw an exception
             }
 
-            document.add(table); // Adiciona a tabela ao documento
+            document.add(table);
 
             document.add(new Paragraph(" "));
+            
+            Paragraph valorTotal = new Paragraph("Valor Total: " + venda.getValorTotal());
+            valorTotal.setAlignment(Element.ALIGN_CENTER);
+            document.add(valorTotal);
+            
             document.add(new Paragraph(" "));
+            
+            Paragraph valorTotalDesconto = new Paragraph("Valor Total com Desconto: " + venda.getValorTotalDesconto());
+            valorTotalDesconto.setAlignment(Element.ALIGN_CENTER);
+            document.add(valorTotalDesconto);
+            
             document.add(new Paragraph(" "));
-            // Adiciona os totais
-            document.add(new Paragraph("Valor Total: " + venda.getValorTotal()));
-            document.add(new Paragraph(" "));
-            document.add(new Paragraph("Valor Total com Desconto: " + venda.getValorTotalDesconto()));
-            document.add(new Paragraph(" "));
-            document.add(new Paragraph("Valor Total a Pagar: " + (venda.getValorTotal() - venda.getValorTotalDesconto())));
+            
+            Paragraph valorTotalPagar = new Paragraph("Valor Total a Pagar: " + (venda.getValorTotal() - venda.getValorTotalDesconto()));
+            valorTotalPagar.setAlignment(Element.ALIGN_CENTER);
+            document.add(valorTotalPagar);
 
-            document.close(); // Close the document after writing
+            document.close();
 
-            // Open the PDF file using the default application
             File file = new File("venda.pdf");
             Desktop.getDesktop().open(file);
         } catch (Exception e) {
-            e.printStackTrace(); // Print any exceptions that occur
+            e.printStackTrace();
         }
     }
 
