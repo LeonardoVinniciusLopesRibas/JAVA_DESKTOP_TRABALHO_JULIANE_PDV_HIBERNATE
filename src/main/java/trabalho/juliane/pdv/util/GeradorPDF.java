@@ -66,7 +66,7 @@ public class GeradorPDF {
             
             document.add(new Paragraph(" "));
             
-            Paragraph valorTotalDesconto = new Paragraph("Valor Total com Desconto: " + venda.getValorTotalDesconto());
+            Paragraph valorTotalDesconto = new Paragraph("Valor de Desconto: " + venda.getValorTotalDesconto());
             valorTotalDesconto.setAlignment(Element.ALIGN_CENTER);
             document.add(valorTotalDesconto);
             
